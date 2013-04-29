@@ -10,6 +10,7 @@ import com.amazonaws.AmazonClientException;
 import com.amazonaws.AmazonServiceException;
 import com.amazonaws.auth.AWSCredentials;
 import com.amazonaws.auth.PropertiesCredentials;
+import com.amazonaws.services.ec2.AmazonEC2;
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.AmazonS3Client;
 import com.amazonaws.services.s3.model.Bucket;
@@ -31,9 +32,11 @@ public class Manager {
 	private static String ImageUrl;
 
 	public static void main(String[] args) throws Exception {
-		// AmazonEC2 ec2;
-		//
-
+		 AmazonEC2 ec2 = ;
+		
+		int numOfWorkers;
+		int numOfJobsForWorker = Integer.parseInt(args[1]);
+		int numOfMassage = 0;
 		PropertiesCredentials pc = new PropertiesCredentials(
 				Manager.class.getResourceAsStream("AwsCredentials.properties"));
 		AWSCredentials credentials = pc;
@@ -47,7 +50,7 @@ public class Manager {
 				+ directoryName.replace('\\', '_').replace('/', '_')
 						.replace(':', '_');
 		bucketName = bucketName.toLowerCase();
-		String key = "tt";
+		String key = "jobs";
 
 		System.out.println("===========================================");
 		System.out.println("Getting Started with Amazon S3");
@@ -139,6 +142,10 @@ public class Manager {
 
 			// sqs.sendMessage(new SendMessageRequest(myQueueUrl,
 			// "This is my message text."));
+			numOfMassage = imageTxt.length - 1;
+			numOfWorkers = numOfMassage / numOfJobsForWorker;
+			if (numOfMassage % numOfJobsForWorker != 0)
+				numOfWorkers++;
 			for (int i = 1; i < imageTxt.length; i++) {
 				sqs.sendMessage(new SendMessageRequest(myQueueUrl, imageTxt[i]));
 			}
