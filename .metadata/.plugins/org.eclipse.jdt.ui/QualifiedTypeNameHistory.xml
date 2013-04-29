@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<qualifiedTypeNameHistroy>
+<fullyQualifiedTypeName name="Main.Local"/>
+<fullyQualifiedTypeName name="com.amazonaws.services.s3.model.PutObjectResult"/>
+<fullyQualifiedTypeName name="com.amazonaws.auth.PropertiesCredentials"/>
+<fullyQualifiedTypeName name="Main.ConstantProvider"/>
+<fullyQualifiedTypeName name="Manager"/>
+<fullyQualifiedTypeName name="ConstantProvider"/>
+</qualifiedTypeNameHistroy>

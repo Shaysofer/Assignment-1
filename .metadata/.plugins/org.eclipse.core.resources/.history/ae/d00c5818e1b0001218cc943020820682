@@ -1,0 +1,16 @@
+package Main;
+
+import java.io.File;
+
+public class Main {
+
+	public static void main(String[] args) throws Exception {
+		Local local = new Local();
+		File file = new File("TxtImage/imageTxt.txt");
+		local.createBucketAndUploadFile(file);
+		local.createQueues();
+		local.sendMessege(local.getBucketName());
+		local.sendMessege(local.getKeyBucketName());
+
+	}
+}
