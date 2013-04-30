@@ -1,0 +1,17 @@
+import java.awt.image.renderable.RenderableImage;
+
+import com.asprise.util.ocr.OCR;
+
+import net.sourceforge.javaocr.gui.OCRDisplay;
+
+public class main {
+
+	/**
+	 * @param args
+	 */
+	public static void main(String[] args) {
+	
+		String s = new OCR().recognizeEverything(image)
+
+	}
+}

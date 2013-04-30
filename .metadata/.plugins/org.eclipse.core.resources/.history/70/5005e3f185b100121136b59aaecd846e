@@ -1,0 +1,11 @@
+public class Worker {
+
+	public Worker() {
+
+	}
+
+	public static void main(String args[]) throws Exception {
+
+	}
+
+}

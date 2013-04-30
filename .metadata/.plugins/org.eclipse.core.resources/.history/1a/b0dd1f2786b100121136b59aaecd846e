@@ -1,0 +1,27 @@
+import java.io.IOException;
+
+import com.amazonaws.auth.PropertiesCredentials;
+import com.amazonaws.services.s3.AmazonS3Client;
+import com.amazonaws.services.sqs.AmazonSQSClient;
+
+public class Worker {
+
+	public Worker() {
+		try {
+			Pc = new PropertiesCredentials(
+					Manager.class
+							.getResourceAsStream("AwsCredentials.properties"));
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		Credentials = Pc;
+		S3 = new AmazonS3Client(Credentials);
+		AmazonSQS = new AmazonSQSClient(Pc);
+
+	}
+
+	public static void main(String args[]) throws Exception {
+
+	}
+
+}

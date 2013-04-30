@@ -14,7 +14,9 @@ import com.amazonaws.services.s3.model.PutObjectRequest;
 import com.amazonaws.services.sqs.AmazonSQS;
 import com.amazonaws.services.sqs.AmazonSQSClient;
 import com.amazonaws.services.sqs.model.CreateQueueRequest;
+import com.amazonaws.services.sqs.model.DeleteMessageRequest;
 import com.amazonaws.services.sqs.model.DeleteQueueRequest;
+import com.amazonaws.services.sqs.model.ReceiveMessageRequest;
 import com.amazonaws.services.sqs.model.SendMessageRequest;
 
 public class Local {
@@ -26,6 +28,7 @@ public class Local {
 	private String ManagerToWorkerUrl;
 	private String WorkerToManagerUrl;
 	private String MesseagesQueueUrl;
+	private String EncodedImageQueueUrl;
 	private String BucketName;
 	private String KeyBucketName;
 
@@ -128,6 +131,12 @@ public class Local {
 			MesseagesQueueUrl = AmazonSqs.createQueue(MesseagesQueueUrlRequest)
 					.getQueueUrl();
 
+			CreateQueueRequest EncodedMesseagesQueueUrlRequest = new CreateQueueRequest()
+					.withQueueName("EncodedQueue");
+			EncodedImageQueueUrl = AmazonSqs.createQueue(
+					EncodedMesseagesQueueUrlRequest).getQueueUrl();
+			System.out.println("Queues Created");
+
 		} catch (AmazonServiceException ase) {
 			System.out
 					.println("Caught an AmazonServiceException, which means your request made it "
@@ -145,10 +154,6 @@ public class Local {
 			System.out.println("Error Message: " + ace.getMessage());
 		}
 
-		int k = 8;
-		if (k > 9)
-			k++;
-
 	}
 
 	public void deleteQueues() {
@@ -157,12 +162,13 @@ public class Local {
 		AmazonSqs.deleteQueue(new DeleteQueueRequest(LocalToManagerUrl));
 		AmazonSqs.deleteQueue(new DeleteQueueRequest(ManagerToWorkerUrl));
 		AmazonSqs.deleteQueue(new DeleteQueueRequest(WorkerToManagerUrl));
+		AmazonSqs.deleteQueue(new DeleteQueueRequest(EncodedImageQueueUrl));
+		AmazonSqs.deleteQueue(new DeleteQueueRequest(MesseagesQueueUrl));
 
 	}
 
-	public void sendMessege(String messege) {
-		AmazonSqs
-				.sendMessage(new SendMessageRequest(LocalToManagerUrl, messege));
+	public void sendMessege(String messege, String to) {
+		AmazonSqs.sendMessage(new SendMessageRequest(to, messege));
 
 	}
 
@@ -238,13 +244,28 @@ public class Local {
 		KeyBucketName = keyBucketName;
 	}
 
+	private void deleteMessegeFromQueue(String messegeToPerform, String Queue) {
+		System.out.println(messegeToPerform + ".\n");
+		ReceiveMessageRequest receiveMessageRequest = new ReceiveMessageRequest(
+				Queue);
+		String messageRecieptHandle = AmazonSqs
+				.receiveMessage(receiveMessageRequest).getMessages().get(0)
+				.getReceiptHandle();
+		AmazonSqs.deleteMessage(new DeleteMessageRequest(Queue,
+				messageRecieptHandle));
+
+	}
+
 	public static void main(String[] args) throws Exception {
 		Local local = new Local();
 		File file = new File("TxtImage/imageTxt.txt");
 		local.createBucketAndUploadFile(file);
 		local.createQueues();
-		local.sendMessege(local.getBucketName() + " "
-				+ local.getKeyBucketName());
+
+		local.sendMessege(
+				local.getBucketName() + " " + local.getKeyBucketName(),
+				ConstantProvider.LOCAL_TO_MANAGER_QUEUE);
+		local.sendMessege("3", ConstantProvider.LOCAL_TO_MANAGER_QUEUE);
 
 	}
 

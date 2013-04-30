@@ -1,0 +1,111 @@
+import java.awt.image.BufferedImage;
+import java.io.IOException;
+import java.net.URL;
+import java.util.List;
+
+import javax.imageio.ImageIO;
+
+import net.sourceforge.javaocr.ocrPlugins.mseOCR.OCRScanner;
+
+import com.amazonaws.auth.AWSCredentials;
+import com.amazonaws.auth.PropertiesCredentials;
+import com.amazonaws.services.ec2.model.Image;
+import com.amazonaws.services.s3.AmazonS3;
+import com.amazonaws.services.s3.AmazonS3Client;
+import com.amazonaws.services.sqs.AmazonSQS;
+import com.amazonaws.services.sqs.AmazonSQSClient;
+import com.amazonaws.services.sqs.model.DeleteMessageRequest;
+import com.amazonaws.services.sqs.model.Message;
+import com.amazonaws.services.sqs.model.ReceiveMessageRequest;
+import com.amazonaws.services.sqs.model.SendMessageRequest;
+import com.asprise.util.ocr.OCR;
+
+public class Worker {
+	private PropertiesCredentials Pc;
+	private AWSCredentials Credentials;
+	private AmazonS3 S3;
+	private AmazonSQS AmazonSQS;
+	private int numOfJobs;
+
+	public Worker() {
+		try {
+			Pc = new PropertiesCredentials(
+					Worker.class
+							.getResourceAsStream("AwsCredentials.properties"));
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		Credentials = Pc;
+		S3 = new AmazonS3Client(Credentials);
+		AmazonSQS = new AmazonSQSClient(Pc);
+		numOfJobs = -1;
+
+	}
+
+	public void setNumOfJobs() {
+		if (numOfJobs == -1) {
+			ReceiveMessageRequest receiveMessageRequest = new ReceiveMessageRequest(
+					ConstantProvider.MANAGER_TO_WORKER_QUEUE);
+			List<Message> messages = AmazonSQS.receiveMessage(
+					receiveMessageRequest).getMessages();
+			numOfJobs = Integer.parseInt(messages.get(0).getBody());
+			String messageRecieptHandle = messages.get(0).getReceiptHandle();
+			AmazonSQS.deleteMessage(new DeleteMessageRequest(
+					ConstantProvider.MANAGER_TO_WORKER_QUEUE,
+					messageRecieptHandle));
+
+		}
+	}
+
+	private String[] getUrlsToWorkOn() {
+		String[] ans = {};
+		String allUrlInRow = "";
+		ReceiveMessageRequest receiveMessageRequest = new ReceiveMessageRequest(
+				ConstantProvider.MESSEAGES_QUEUE);
+		receiveMessageRequest.setMaxNumberOfMessages(1);
+		for (int i = 0; i < numOfJobs; i++) {
+			try {
+				Message currentMessege = AmazonSQS
+						.receiveMessage(receiveMessageRequest).getMessages()
+						.get(0);
+
+				allUrlInRow = allUrlInRow + currentMessege.getBody() + " ";
+				System.out.println("Deleting messege from queue : "
+						+ currentMessege);
+				String messageRecieptHandle = currentMessege.getReceiptHandle();
+				AmazonSQS
+						.deleteMessage(new DeleteMessageRequest(
+								ConstantProvider.MESSEAGES_QUEUE,
+								messageRecieptHandle));
+
+			} catch (Exception e) {
+				System.out.println("No more Messeges in queue");
+				break;
+			}
+		}
+		ans = allUrlInRow.split(" ");
+
+		return ans;
+	}
+
+	private void sendMessege(String messege, String to) {
+		System.out.println("Send messege " + messege + " to " + to);
+		AmazonSQS.sendMessage(new SendMessageRequest(to, messege));
+
+	}
+
+	public static void main(String args[]) throws Exception {
+		Worker worker = new Worker();
+		worker.setNumOfJobs();
+		String urls[] = worker.getUrlsToWorkOn();
+		for (int i = 0; i < urls.length; i++) {
+			URL url = new URL(urls[i]);
+			BufferedImage image = ImageIO.read(url);
+			String encode = new OCR().recognizeEverything(image);
+			worker.sendMessege(urls[i] + "" + encode,
+					ConstantProvider.WORKER_TO_MANAGER_QUEUE);
+		}
+
+	}
+
+}

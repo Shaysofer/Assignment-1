@@ -1,106 +1,117 @@
+import java.awt.image.BufferedImage;
+import java.io.IOException;
+import java.net.URL;
 import java.util.List;
-import java.util.UUID;
-import java.util.Map.Entry;
 
-import com.amazonaws.AmazonClientException;
-import com.amazonaws.AmazonServiceException;
+import javax.imageio.ImageIO;
+
+import net.sourceforge.javaocr.ocrPlugins.mseOCR.OCRScanner;
+
+import com.amazonaws.auth.AWSCredentials;
 import com.amazonaws.auth.PropertiesCredentials;
+import com.amazonaws.services.ec2.model.Image;
+import com.amazonaws.services.s3.AmazonS3;
+import com.amazonaws.services.s3.AmazonS3Client;
 import com.amazonaws.services.sqs.AmazonSQS;
 import com.amazonaws.services.sqs.AmazonSQSClient;
-import com.amazonaws.services.sqs.model.CreateQueueRequest;
-import com.amazonaws.services.sqs.model.GetQueueUrlRequest;
+import com.amazonaws.services.sqs.model.DeleteMessageRequest;
 import com.amazonaws.services.sqs.model.Message;
 import com.amazonaws.services.sqs.model.ReceiveMessageRequest;
 import com.amazonaws.services.sqs.model.SendMessageRequest;
+import com.asprise.util.ocr.OCR;
 
 public class Worker {
+	private PropertiesCredentials Pc;
+	private AWSCredentials Credentials;
+	private AmazonS3 S3;
+	private AmazonSQS AmazonSQS;
+	private int numOfJobs;
 
-	public static void main(String[] args) throws Exception {
-		PropertiesCredentials pc = new PropertiesCredentials(
-				Worker.class.getResourceAsStream("AwsCredentials.properties"));
-
-		AmazonSQS sqs = new AmazonSQSClient(pc);
-
-		System.out.println("===========================================");
-		System.out.println("Getting Started with Amazon SQS");
-		System.out.println("===========================================\n");
-
+	public Worker() {
 		try {
-			// // Create a queue
-			// System.out.println("Creating a new SQS queue called MyQueue.\n");
-			// CreateQueueRequest createQueueRequest = new CreateQueueRequest(
-			// "MyQueue" + UUID.randomUUID());
-			// String myQueueUrl = sqs.createQueue(createQueueRequest)
-			// .getQueueUrl();
-
-			// List queues
-			System.out.println("Listing all queues in your account.\n");
-			for (String queueUrl : sqs.listQueues().getQueueUrls()) {
-				System.out.println("  QueueUrl: " + queueUrl);
-			}
-			System.out.println();
-
-			// // Send a message
-			// System.out.println("Sending a message to MyQueue.\n");
-			// String[] imageTxt = ImageUrl.split("\n");
-			//
-			// // sqs.sendMessage(new SendMessageRequest(myQueueUrl,
-			// // "This is my message text."));
-			// for (int i = 1; i < imageTxt.length; i++) {
-			// sqs.sendMessage(new SendMessageRequest(myQueueUrl, imageTxt[i]));
-			// }
-
-			// Receive messages
-
-			System.out.println("Receiving messages from MyQueue.\n");
-			ReceiveMessageRequest receiveMessageRequest = new ReceiveMessageRequest(
-					sqs.listQueues().getQueueUrls().get(0));
-			List<Message> messages = sqs.receiveMessage(receiveMessageRequest)
-					.getMessages();
-
-			for (Message message : messages) {
-				System.out.println("  Message");
-				System.out.println("    MessageId:     "
-						+ message.getMessageId());
-				System.out.println("    ReceiptHandle: "
-						+ message.getReceiptHandle());
-				System.out.println("    MD5OfBody:     "
-						+ message.getMD5OfBody());
-				System.out.println("    Body:          " + message.getBody());
-				for (Entry<String, String> entry : message.getAttributes()
-						.entrySet()) {
-					System.out.println("  Attribute");
-					System.out.println("    Name:  " + entry.getKey());
-					System.out.println("    Value: " + entry.getValue());
-				}
-			}
-			System.out.println();
-
-			// // Delete a message
-			// System.out.println("Deleting a message.\n");
-			// String messageRecieptHandle = messages.get(0).getReceiptHandle();
-			// sqs.deleteMessage(new DeleteMessageRequest(myQueueUrl,
-			// messageRecieptHandle));
-			//
-			// // Delete a queue
-			// System.out.println("Deleting the test queue.\n");
-			// sqs.deleteQueue(new DeleteQueueRequest(myQueueUrl));
-		} catch (AmazonServiceException ase) {
-			System.out
-					.println("Caught an AmazonServiceException, which means your request made it "
-							+ "to Amazon SQS, but was rejected with an error response for some reason.");
-			System.out.println("Error Message:    " + ase.getMessage());
-			System.out.println("HTTP Status Code: " + ase.getStatusCode());
-			System.out.println("AWS Error Code:   " + ase.getErrorCode());
-			System.out.println("Error Type:       " + ase.getErrorType());
-			System.out.println("Request ID:       " + ase.getRequestId());
-		} catch (AmazonClientException ace) {
-			System.out
-					.println("Caught an AmazonClientException, which means the client encountered "
-							+ "a serious internal problem while trying to communicate with SQS, such as not "
-							+ "being able to access the network.");
-			System.out.println("Error Message: " + ace.getMessage());
+			Pc = new PropertiesCredentials(
+					Worker.class
+							.getResourceAsStream("AwsCredentials.properties"));
+		} catch (IOException e) {
+			e.printStackTrace();
 		}
+		Credentials = Pc;
+		S3 = new AmazonS3Client(Credentials);
+		AmazonSQS = new AmazonSQSClient(Pc);
+		numOfJobs = -1;
+
+	}
+
+	public void setNumOfJobs() {
+		if (numOfJobs == -1) {
+			ReceiveMessageRequest receiveMessageRequest = new ReceiveMessageRequest(
+					ConstantProvider.MANAGER_TO_WORKER_QUEUE);
+			List<Message> messages = AmazonSQS.receiveMessage(
+					receiveMessageRequest).getMessages();
+			numOfJobs = Integer.parseInt(messages.get(0).getBody());
+			String messageRecieptHandle = messages.get(0).getReceiptHandle();
+			AmazonSQS.deleteMessage(new DeleteMessageRequest(
+					ConstantProvider.MANAGER_TO_WORKER_QUEUE,
+					messageRecieptHandle));
+
+		}
+	}
+
+	private String getUrlToWorkOn() {
+		ReceiveMessageRequest receiveMessageRequest = new ReceiveMessageRequest(
+				ConstantProvider.MESSEAGES_QUEUE);
+		receiveMessageRequest.setVisibilityTimeout(0);
+		receiveMessageRequest.setMaxNumberOfMessages(1);
+		String ans = "";
+		try {
+			Message currentMessege = AmazonSQS
+					.receiveMessage(receiveMessageRequest).getMessages().get(0);
+			ans = currentMessege.getBody();
+			deleteMessegeFromQueue("Deleting messege " + currentMessege
+					+ "from messeges queue", ConstantProvider.MESSEAGES_QUEUE);
+		} catch (Exception e) {
+			System.out.println("No more Messeges in queue");
+			ans = null;
+		}
+		return ans;
+	}
+
+	private void sendMessege(String messege, String to) {
+		System.out.println("Send messege " + messege + " to " + to);
+		AmazonSQS.sendMessage(new SendMessageRequest(to, messege));
+
+	}
+
+	private void deleteMessegeFromQueue(String messegeToPerform, String Queue) {
+		System.out.println(messegeToPerform + ".\n");
+		ReceiveMessageRequest receiveMessageRequest = new ReceiveMessageRequest(
+				Queue);
+		String messageRecieptHandle = AmazonSQS
+				.receiveMessage(receiveMessageRequest).getMessages().get(0)
+				.getReceiptHandle();
+		AmazonSQS.deleteMessage(new DeleteMessageRequest(Queue,
+				messageRecieptHandle));
+
+	}
+
+	public static void main(String args[]) throws Exception {
+		Worker worker = new Worker();
+		// worker.setNumOfJobs();
+		String urlToWork = worker.getUrlToWorkOn();
+		int messeageDid = 0;
+
+		while (urlToWork != null) {
+			URL url = new URL(urlToWork);
+			BufferedImage image = ImageIO.read(url);
+			String encode = new OCR().recognizeEverything(image);
+			worker.sendMessege(urlToWork + "1qazxsw2@WSXZAQ!" + encode,
+					ConstantProvider.ENCODED_IMAGE);
+			urlToWork = worker.getUrlToWorkOn();
+			messeageDid++;
+
+		}
+		worker.sendMessege("Worker done and did" + messeageDid + " messeages",
+				ConstantProvider.WORKER_TO_MANAGER_QUEUE);
 
 	}
 

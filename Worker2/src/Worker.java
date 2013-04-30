@@ -1,24 +1,12 @@
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
-import java.net.URL;
-import java.util.List;
-import java.util.Map.Entry;
-
-import javax.imageio.ImageIO;
-
 import com.amazonaws.auth.PropertiesCredentials;
-import com.amazonaws.services.ec2.AmazonEC2;
-import com.amazonaws.services.ec2.AmazonEC2Client;
 import com.amazonaws.services.sqs.AmazonSQS;
 import com.amazonaws.services.sqs.AmazonSQSClient;
 import com.amazonaws.services.sqs.model.DeleteMessageRequest;
 import com.amazonaws.services.sqs.model.Message;
 import com.amazonaws.services.sqs.model.ReceiveMessageRequest;
 import com.amazonaws.services.sqs.model.SendMessageRequest;
-import com.asprise.util.ocr.OCR ;
 
-public class Worker {
+class Worker {
 
 	public static void main(String args[]) throws Exception{
 		AmazonSQS sqs = new AmazonSQSClient(new PropertiesCredentials(
