@@ -10,6 +10,7 @@ import com.amazonaws.auth.PropertiesCredentials;
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.AmazonS3Client;
 import com.amazonaws.services.s3.model.Bucket;
+import com.amazonaws.services.s3.model.CannedAccessControlList;
 import com.amazonaws.services.s3.model.PutObjectRequest;
 import com.amazonaws.services.sqs.AmazonSQS;
 import com.amazonaws.services.sqs.AmazonSQSClient;
@@ -57,6 +58,54 @@ public class Local {
 		// echo "Please remember to set the MySQL root password!"";
 		return s;
 	}
+	
+	public void createBucketAndUploadFileJar(File file,String key) {
+		
+		BucketName = Credentials.getAWSAccessKeyId()
+				+ "."
+				+ ConstantProvider.DIRECTORY_NAME.replace('\\', '_')
+						.replace('/', '_').replace(':', '_');
+		BucketName = BucketName.toLowerCase();
+		
+		
+		try {
+			System.out.println("Creating bucket " + BucketName + "\n");
+			S3.createBucket(BucketName);
+
+			/*
+			 * List the buckets in your account
+			 */
+			System.out.println("Listing buckets");
+			System.out.println("Uploading "+ key +" to S3 from a file\n");
+			PutObjectRequest putRequest = new PutObjectRequest(BucketName, key, file);
+			putRequest.setCannedAcl(CannedAccessControlList.PublicReadWrite);
+			S3.putObject(putRequest);
+	}		
+		catch (AmazonServiceException ase) {
+			System.out
+					.println("Caught an AmazonServiceException, which means your request made it "
+							+ "to Amazon S3, but was rejected with an error response for some reason.");
+			System.out.println("Error Message:    " + ase.getMessage());
+			System.out.println("HTTP Status Code: " + ase.getStatusCode());
+			System.out.println("AWS Error Code:   " + ase.getErrorCode());
+			System.out.println("Error Type:       " + ase.getErrorType());
+			System.out.println("Request ID:       " + ase.getRequestId());
+		} catch (AmazonClientException ace) {
+			System.out
+					.println("Caught an AmazonClientException, which means the client encountered "
+							+ "a serious internal problem while trying to communicate with S3, "
+							+ "such as not being able to access the network.");
+			System.out.println("Error Message: " + ace.getMessage());
+		}
+
+	}	
+		
+		
+	
+		
+		
+		
+		
 
 	public void createBucketAndUploadFile(File file) {
 
@@ -133,6 +182,9 @@ public class Local {
 
 			CreateQueueRequest EncodedMesseagesQueueUrlRequest = new CreateQueueRequest()
 					.withQueueName("EncodedQueue");
+			@SuppressWarnings("unused")
+			CreateQueueRequest WorketToManagerFinish = new CreateQueueRequest()
+			.withQueueName("WorketToManagerFinish");
 			EncodedImageQueueUrl = AmazonSqs.createQueue(
 					EncodedMesseagesQueueUrlRequest).getQueueUrl();
 			System.out.println("Queues Created");
@@ -156,14 +208,15 @@ public class Local {
 
 	}
 
-	public void deleteQueues() {
+	public void deleteQueues() throws InterruptedException {
 
 		System.out.println("Deleting the queues.\n");
-		AmazonSqs.deleteQueue(new DeleteQueueRequest(LocalToManagerUrl));
-		AmazonSqs.deleteQueue(new DeleteQueueRequest(ManagerToWorkerUrl));
-		AmazonSqs.deleteQueue(new DeleteQueueRequest(WorkerToManagerUrl));
-		AmazonSqs.deleteQueue(new DeleteQueueRequest(EncodedImageQueueUrl));
-		AmazonSqs.deleteQueue(new DeleteQueueRequest(MesseagesQueueUrl));
+		AmazonSqs.deleteQueue(new DeleteQueueRequest(ConstantProvider.ENCODED_IMAGE));
+		AmazonSqs.deleteQueue(new DeleteQueueRequest(ConstantProvider.LOCAL_TO_MANAGER_QUEUE));
+		AmazonSqs.deleteQueue(new DeleteQueueRequest(ConstantProvider.MANAGER_TO_WORKER_QUEUE));
+		AmazonSqs.deleteQueue(new DeleteQueueRequest(ConstantProvider.MESSEAGES_QUEUE));
+		AmazonSqs.deleteQueue(new DeleteQueueRequest(ConstantProvider.WORKER_TO_MANAGER_QUEUE));
+		Thread.sleep(60000);
 
 	}
 
@@ -244,6 +297,7 @@ public class Local {
 		KeyBucketName = keyBucketName;
 	}
 
+	@SuppressWarnings("unused")
 	private void deleteMessegeFromQueue(String messegeToPerform, String Queue) {
 		System.out.println(messegeToPerform + ".\n");
 		ReceiveMessageRequest receiveMessageRequest = new ReceiveMessageRequest(
@@ -260,6 +314,11 @@ public class Local {
 		Local local = new Local();
 		File file = new File("TxtImage/imageTxt.txt");
 		local.createBucketAndUploadFile(file);
+		File file1= new File("check2.jar");
+		//local.createBucketAndUploadFileJar(file1,"check2");
+		file1= new File("libAspriseOCR.so");
+		//local.createBucketAndUploadFileJar(file1,"libAspriseOCR.so");
+	//	local.deleteQueues();
 		local.createQueues();
 
 		local.sendMessege(
@@ -268,5 +327,7 @@ public class Local {
 		local.sendMessege("3", ConstantProvider.LOCAL_TO_MANAGER_QUEUE);
 
 	}
+
+
 
 }

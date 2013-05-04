@@ -4,10 +4,19 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.util.ArrayList;
 import java.util.List;
+
+import org.apache.commons.codec.binary.Base64;
 
 import com.amazonaws.auth.AWSCredentials;
 import com.amazonaws.auth.PropertiesCredentials;
+import com.amazonaws.services.ec2.AmazonEC2;
+import com.amazonaws.services.ec2.AmazonEC2Client;
+import com.amazonaws.services.ec2.model.Instance;
+import com.amazonaws.services.ec2.model.InstanceType;
+import com.amazonaws.services.ec2.model.RunInstancesRequest;
+import com.amazonaws.services.ec2.model.TerminateInstancesRequest;
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.AmazonS3Client;
 import com.amazonaws.services.s3.model.GetObjectRequest;
@@ -15,6 +24,7 @@ import com.amazonaws.services.s3.model.S3Object;
 import com.amazonaws.services.sqs.AmazonSQS;
 import com.amazonaws.services.sqs.AmazonSQSClient;
 import com.amazonaws.services.sqs.model.DeleteMessageRequest;
+import com.amazonaws.services.sqs.model.DeleteQueueRequest;
 import com.amazonaws.services.sqs.model.Message;
 import com.amazonaws.services.sqs.model.ReceiveMessageRequest;
 import com.amazonaws.services.sqs.model.SendMessageRequest;
@@ -27,6 +37,8 @@ public class Manager {
 	private PropertiesCredentials Pc;
 	private AWSCredentials Credentials;
 	private AmazonS3 S3;
+	private AmazonEC2 ec2;
+	private ArrayList<String> instance = new ArrayList<String>();
 	private String keyBucketName;
 	private String BucketName;
 	private AmazonSQS AmazonSQS;
@@ -40,6 +52,7 @@ public class Manager {
 			e.printStackTrace();
 		}
 		Credentials = Pc;
+
 		S3 = new AmazonS3Client(Credentials);
 		AmazonSQS = new AmazonSQSClient(Pc);
 
@@ -174,14 +187,39 @@ public class Manager {
 
 	}
 
+	public String userData() {
+		String s = "#! /bin/bash\n"
+				+ "cd /home/ec2-user/\n"
+				+ "wget https://s3.amazonaws.com/akiajeww7utg6gq2srmq.distributed/check2\n"
+				+ "wget https://s3.amazonaws.com/akiajeww7utg6gq2srmq.distributed/libAspriseOCR.so\n"
+				+ "java -jar check2 >log.txt\n";
+
+		return new String(Base64.encodeBase64(s.getBytes()));
+	}
+
+	public void setEC2() {
+		for (int i = 0; i < numOfWorkers; i++) {
+			ec2 = new AmazonEC2Client(Pc);
+			RunInstancesRequest request = new RunInstancesRequest(
+					"ami-3275ee5b", 1, 1);
+			request.setKeyName("oren1");
+			request.setInstanceType(InstanceType.T1Micro.toString());
+			request.setUserData(userData());
+			List<Instance> instances = ec2.runInstances(request)
+					.getReservation().getInstances();
+			instance.add(instances.get(0).getInstanceId());
+			// System.out.println("Launch instances: " + instances);
+		}
+	}
+
 	public void BuildHtmlFile() {
 		int numOfMesseage = getNumOfMessage();
 		String workersHandle = "";
 		while (numOfMesseage > 0) {
 			workersHandle = workersHandle
-					+ receiveMessegeFromQueue(ConstantProvider.ENCODED_IMAGE);
+					+ receiveMessegeFromQueue(ConstantProvider.WORKER_TO_MANAGER_QUEUE);
 			deleteMessegeFromQueue("Encoded messeage had been delete",
-					ConstantProvider.ENCODED_IMAGE);
+					ConstantProvider.WORKER_TO_MANAGER_QUEUE);
 			numOfMesseage--;
 		}
 		String[] workerHandleInArray = workersHandle.split("1qazxsw2@WSXZAQ!");
@@ -209,7 +247,25 @@ public class Manager {
 
 	}
 
+	void clean() {
+		for (int i = 0; i < numOfWorkers; i++) {
+			ec2.terminateInstances(new TerminateInstancesRequest(instance));
+		}
+		BuildHtmlFile();
+		AmazonSQS.deleteQueue(new DeleteQueueRequest(
+				ConstantProvider.ENCODED_IMAGE));
+		AmazonSQS.deleteQueue(new DeleteQueueRequest(
+				ConstantProvider.LOCAL_TO_MANAGER_QUEUE));
+		AmazonSQS.deleteQueue(new DeleteQueueRequest(
+				ConstantProvider.MANAGER_TO_WORKER_QUEUE));
+		AmazonSQS.deleteQueue(new DeleteQueueRequest(
+				ConstantProvider.MESSEAGES_QUEUE));
+		AmazonSQS.deleteQueue(new DeleteQueueRequest(
+				ConstantProvider.WORKER_TO_MANAGER_QUEUE));
+	}
+
 	public static void main(String[] args) throws Exception {
+
 		Manager manager = new Manager();
 		manager.getOrderFromLocal();
 		manager.setWorkersForJobs();
@@ -218,24 +274,26 @@ public class Manager {
 				ConstantProvider.MANAGER_TO_WORKER_QUEUE);
 
 		// Busy wait to check if all workers has done there work
+		manager.setEC2();
+
 		int workersDoneWorking = manager.getNumOfWorkers();
 		while (workersDoneWorking > 0) {
 			try {
-				manager.receiveMessegeFromQueue(ConstantProvider.WORKER_TO_MANAGER_QUEUE);
-				System.out.println("Worker " + workersDoneWorking + " Done");
-				manager.deleteMessegeFromQueue("Worker done messege delete",
-						ConstantProvider.WORKER_TO_MANAGER_QUEUE);
+				manager.receiveMessegeFromQueue(ConstantProvider.WorketToManagerFinish);
+				System.out.println("left "
+						+ Integer.toString(manager.getNumOfWorkers()
+								- workersDoneWorking) + " Done");
+				manager.deleteMessegeFromQueue("finish",
+						ConstantProvider.WorketToManagerFinish);
 				workersDoneWorking--;
 
 			} catch (Exception e) {
-				Thread.sleep(5000);
+				Thread.sleep(1000);
 			}
 
 		}
-		System.out.println("Start Building the html file");
-		manager.BuildHtmlFile();
 
-		// TODO : check why listing?
-
+		manager.clean();
+		System.out.println("Start Building the html file"); ///in the clean function
 	}
 }
