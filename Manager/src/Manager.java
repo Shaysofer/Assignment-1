@@ -1,5 +1,6 @@
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
+import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
@@ -20,6 +21,7 @@ import com.amazonaws.services.ec2.model.TerminateInstancesRequest;
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.AmazonS3Client;
 import com.amazonaws.services.s3.model.GetObjectRequest;
+import com.amazonaws.services.s3.model.PutObjectRequest;
 import com.amazonaws.services.s3.model.S3Object;
 import com.amazonaws.services.sqs.AmazonSQS;
 import com.amazonaws.services.sqs.AmazonSQSClient;
@@ -68,22 +70,12 @@ public class Manager {
 		String messege = AmazonSQS.receiveMessage(receiveMessageRequest)
 				.getMessages().get(0).getBody();
 		String[] messegeSplit;
-		try {
-			numOfJobsForWorker = Integer.parseInt(messege);
-			messegeSplit = AmazonSQS.receiveMessage(receiveMessageRequest)
-					.getMessages().get(0).getBody().split(" ");
-
-		} catch (Exception e) {
-			messegeSplit = messege.split(" ");
-			numOfJobsForWorker = Integer.parseInt(AmazonSQS
-					.receiveMessage(receiveMessageRequest).getMessages().get(0)
-					.getBody());
-
-		}
+		messegeSplit = messege.split(" ");
 
 		// String messegeSplit[] = messages.get(0).getBody().split(" ");
 		BucketName = messegeSplit[0];
 		keyBucketName = messegeSplit[1];
+		numOfJobsForWorker = Integer.parseInt(messegeSplit[2]);
 
 		System.out.println("Downloading File from server");
 		S3Object object = S3.getObject(new GetObjectRequest(BucketName,
@@ -101,6 +93,12 @@ public class Manager {
 		// deleteMessegeFromQueue("Deleting order messege",
 		// ConstantProvider.LOCAL_TO_MANAGER_QUEUE);
 		// S3.deleteObject(BucketName, keyBucketName);
+
+	}
+
+	private void uploadFileToServer(File file) {
+		System.out.println("Uploading a new object to S3 from a file\n");
+		S3.putObject(new PutObjectRequest(BucketName, keyBucketName, file));
 
 	}
 
@@ -212,7 +210,7 @@ public class Manager {
 		}
 	}
 
-	public void BuildHtmlFile() {
+	public void BuildFile() {
 		int numOfMesseage = getNumOfMessage();
 		String workersHandle = "";
 		while (numOfMesseage > 0) {
@@ -225,7 +223,7 @@ public class Manager {
 		String[] workerHandleInArray = workersHandle.split("1qazxsw2@WSXZAQ!");
 
 		try {
-			FileWriter fileWriter = new FileWriter("test.html");
+			FileWriter fileWriter = new FileWriter("html.txt");
 			BufferedWriter out = new BufferedWriter(fileWriter);
 			out.write("<html>\n<title>OCR</title>\n<body>");
 			for (int i = 0; i < workerHandleInArray.length; i = i + 2) {
@@ -251,7 +249,7 @@ public class Manager {
 		for (int i = 0; i < numOfWorkers; i++) {
 			ec2.terminateInstances(new TerminateInstancesRequest(instance));
 		}
-		BuildHtmlFile();
+		BuildFile();
 		AmazonSQS.deleteQueue(new DeleteQueueRequest(
 				ConstantProvider.ENCODED_IMAGE));
 		AmazonSQS.deleteQueue(new DeleteQueueRequest(
@@ -279,12 +277,12 @@ public class Manager {
 		int workersDoneWorking = manager.getNumOfWorkers();
 		while (workersDoneWorking > 0) {
 			try {
-				manager.receiveMessegeFromQueue(ConstantProvider.WorketToManagerFinish);
+				manager.receiveMessegeFromQueue(ConstantProvider.WORKER_TO_MANAGER_FINISH);
 				System.out.println("left "
 						+ Integer.toString(manager.getNumOfWorkers()
 								- workersDoneWorking) + " Done");
 				manager.deleteMessegeFromQueue("finish",
-						ConstantProvider.WorketToManagerFinish);
+						ConstantProvider.WORKER_TO_MANAGER_FINISH);
 				workersDoneWorking--;
 
 			} catch (Exception e) {
@@ -294,6 +292,14 @@ public class Manager {
 		}
 
 		manager.clean();
-		System.out.println("Start Building the html file"); ///in the clean function
+		System.out.println("Start Building the html file"); // /in the clean
+															// function
+		File file = new File("html.txt");
+
+		manager.uploadFileToServer(file);
+
+		// Let local know that work has done
+		manager.sendMessege("Done", ConstantProvider.MANAGER_DONE);
+
 	}
 }

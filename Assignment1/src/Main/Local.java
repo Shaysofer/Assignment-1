@@ -1,7 +1,13 @@
 package Main;
 
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.util.List;
 
 import com.amazonaws.AmazonClientException;
 import com.amazonaws.AmazonServiceException;
@@ -11,12 +17,15 @@ import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.AmazonS3Client;
 import com.amazonaws.services.s3.model.Bucket;
 import com.amazonaws.services.s3.model.CannedAccessControlList;
+import com.amazonaws.services.s3.model.GetObjectRequest;
 import com.amazonaws.services.s3.model.PutObjectRequest;
+import com.amazonaws.services.s3.model.S3Object;
 import com.amazonaws.services.sqs.AmazonSQS;
 import com.amazonaws.services.sqs.AmazonSQSClient;
 import com.amazonaws.services.sqs.model.CreateQueueRequest;
 import com.amazonaws.services.sqs.model.DeleteMessageRequest;
 import com.amazonaws.services.sqs.model.DeleteQueueRequest;
+import com.amazonaws.services.sqs.model.Message;
 import com.amazonaws.services.sqs.model.ReceiveMessageRequest;
 import com.amazonaws.services.sqs.model.SendMessageRequest;
 
@@ -30,6 +39,7 @@ public class Local {
 	private String WorkerToManagerUrl;
 	private String MesseagesQueueUrl;
 	private String EncodedImageQueueUrl;
+	private String ManagerDone;
 	private String BucketName;
 	private String KeyBucketName;
 
@@ -58,16 +68,15 @@ public class Local {
 		// echo "Please remember to set the MySQL root password!"";
 		return s;
 	}
-	
-	public void createBucketAndUploadFileJar(File file,String key) {
-		
+
+	public void createBucketAndUploadFileJar(File file, String key) {
+
 		BucketName = Credentials.getAWSAccessKeyId()
 				+ "."
 				+ ConstantProvider.DIRECTORY_NAME.replace('\\', '_')
 						.replace('/', '_').replace(':', '_');
 		BucketName = BucketName.toLowerCase();
-		
-		
+
 		try {
 			System.out.println("Creating bucket " + BucketName + "\n");
 			S3.createBucket(BucketName);
@@ -76,12 +85,12 @@ public class Local {
 			 * List the buckets in your account
 			 */
 			System.out.println("Listing buckets");
-			System.out.println("Uploading "+ key +" to S3 from a file\n");
-			PutObjectRequest putRequest = new PutObjectRequest(BucketName, key, file);
+			System.out.println("Uploading " + key + " to S3 from a file\n");
+			PutObjectRequest putRequest = new PutObjectRequest(BucketName, key,
+					file);
 			putRequest.setCannedAcl(CannedAccessControlList.PublicReadWrite);
 			S3.putObject(putRequest);
-	}		
-		catch (AmazonServiceException ase) {
+		} catch (AmazonServiceException ase) {
 			System.out
 					.println("Caught an AmazonServiceException, which means your request made it "
 							+ "to Amazon S3, but was rejected with an error response for some reason.");
@@ -98,14 +107,7 @@ public class Local {
 			System.out.println("Error Message: " + ace.getMessage());
 		}
 
-	}	
-		
-		
-	
-		
-		
-		
-		
+	}
 
 	public void createBucketAndUploadFile(File file) {
 
@@ -184,9 +186,14 @@ public class Local {
 					.withQueueName("EncodedQueue");
 			@SuppressWarnings("unused")
 			CreateQueueRequest WorketToManagerFinish = new CreateQueueRequest()
-			.withQueueName("WorketToManagerFinish");
+					.withQueueName("WorketToManagerFinish");
 			EncodedImageQueueUrl = AmazonSqs.createQueue(
 					EncodedMesseagesQueueUrlRequest).getQueueUrl();
+			CreateQueueRequest ManagerDoneQueueRequest = new CreateQueueRequest()
+					.withQueueName("ManagerDone");
+			ManagerDone = AmazonSqs.createQueue(ManagerDoneQueueRequest)
+					.getQueueUrl();
+
 			System.out.println("Queues Created");
 
 		} catch (AmazonServiceException ase) {
@@ -211,11 +218,16 @@ public class Local {
 	public void deleteQueues() throws InterruptedException {
 
 		System.out.println("Deleting the queues.\n");
-		AmazonSqs.deleteQueue(new DeleteQueueRequest(ConstantProvider.ENCODED_IMAGE));
-		AmazonSqs.deleteQueue(new DeleteQueueRequest(ConstantProvider.LOCAL_TO_MANAGER_QUEUE));
-		AmazonSqs.deleteQueue(new DeleteQueueRequest(ConstantProvider.MANAGER_TO_WORKER_QUEUE));
-		AmazonSqs.deleteQueue(new DeleteQueueRequest(ConstantProvider.MESSEAGES_QUEUE));
-		AmazonSqs.deleteQueue(new DeleteQueueRequest(ConstantProvider.WORKER_TO_MANAGER_QUEUE));
+		AmazonSqs.deleteQueue(new DeleteQueueRequest(
+				ConstantProvider.ENCODED_IMAGE));
+		AmazonSqs.deleteQueue(new DeleteQueueRequest(
+				ConstantProvider.LOCAL_TO_MANAGER_QUEUE));
+		AmazonSqs.deleteQueue(new DeleteQueueRequest(
+				ConstantProvider.MANAGER_TO_WORKER_QUEUE));
+		AmazonSqs.deleteQueue(new DeleteQueueRequest(
+				ConstantProvider.MESSEAGES_QUEUE));
+		AmazonSqs.deleteQueue(new DeleteQueueRequest(
+				ConstantProvider.WORKER_TO_MANAGER_QUEUE));
 		Thread.sleep(60000);
 
 	}
@@ -297,6 +309,38 @@ public class Local {
 		KeyBucketName = keyBucketName;
 	}
 
+	public String[] downloadFileFromServer() {
+		String[] AnswearMessege = null;
+		System.out.println("Downloading File from server");
+		S3Object object = S3.getObject(new GetObjectRequest(BucketName,
+				KeyBucketName));
+		System.out.println("Content-Type: "
+				+ object.getObjectMetadata().getContentType());
+		try {
+			AnswearMessege = parseInputStream(object.getObjectContent());
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return AnswearMessege;
+
+	}
+
+	private String[] parseInputStream(InputStream input) throws IOException {
+		BufferedReader reader = new BufferedReader(new InputStreamReader(input));
+		String ImageUrls = "";
+		while (true) {
+			String line = reader.readLine();
+			if (line == null)
+				break;
+			ImageUrls = ImageUrls + "\n" + line;
+
+		}
+		String[] ans = ImageUrls.split("\n");
+
+		return ans;
+	}
+
 	@SuppressWarnings("unused")
 	private void deleteMessegeFromQueue(String messegeToPerform, String Queue) {
 		System.out.println(messegeToPerform + ".\n");
@@ -314,20 +358,53 @@ public class Local {
 		Local local = new Local();
 		File file = new File("TxtImage/imageTxt.txt");
 		local.createBucketAndUploadFile(file);
-		File file1= new File("check2.jar");
-		//local.createBucketAndUploadFileJar(file1,"check2");
-		file1= new File("libAspriseOCR.so");
-		//local.createBucketAndUploadFileJar(file1,"libAspriseOCR.so");
-	//	local.deleteQueues();
+		File file1 = new File("check2.jar");
+		// local.createBucketAndUploadFileJar(file1,"check2");
+		file1 = new File("libAspriseOCR.so");
+		// local.createBucketAndUploadFileJar(file1,"libAspriseOCR.so");
+		// local.deleteQueues();
 		local.createQueues();
 
+		String inputFileName = "";
+		String outputFileName = "";
+		String numOfWorkers = "";
+
+		if (args.length > 0) {
+			inputFileName = args[1];
+			outputFileName = args[2];
+			numOfWorkers = args[3];
+
+		}
 		local.sendMessege(
 				local.getBucketName() + " " + local.getKeyBucketName(),
-				ConstantProvider.LOCAL_TO_MANAGER_QUEUE);
-		local.sendMessege("3", ConstantProvider.LOCAL_TO_MANAGER_QUEUE);
+				ConstantProvider.LOCAL_TO_MANAGER_QUEUE + " 3");
+		// Wait for finish answer
+		while (true) {
+			try {
+				ReceiveMessageRequest receiveMessageRequest = new ReceiveMessageRequest(
+						ConstantProvider.MANAGER_DONE);
+				List<Message> messages = local.getAmazonSqs()
+						.receiveMessage(receiveMessageRequest).getMessages();
+				break;
+			} catch (Exception e) {
+				Thread.sleep(1000);
+			}
+
+		}
+		String MissionComplete[] = local.downloadFileFromServer();
+
+		try {
+			FileWriter fileWriter = new FileWriter("html.html");
+			BufferedWriter out = new BufferedWriter(fileWriter);
+			for (String s : MissionComplete) {
+				out.write(s);
+			}
+			out.close();
+
+		} catch (Exception e) {
+			System.err.println("Error: " + e.getMessage());
+		}
 
 	}
-
-
 
 }
