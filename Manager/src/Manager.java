@@ -250,8 +250,7 @@ public class Manager {
 			ec2.terminateInstances(new TerminateInstancesRequest(instance));
 		}
 		BuildFile();
-		AmazonSQS.deleteQueue(new DeleteQueueRequest(
-				ConstantProvider.ENCODED_IMAGE));
+
 		AmazonSQS.deleteQueue(new DeleteQueueRequest(
 				ConstantProvider.LOCAL_TO_MANAGER_QUEUE));
 		AmazonSQS.deleteQueue(new DeleteQueueRequest(

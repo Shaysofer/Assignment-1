@@ -38,7 +38,7 @@ public class Local {
 	private String ManagerToWorkerUrl;
 	private String WorkerToManagerUrl;
 	private String MesseagesQueueUrl;
-	private String EncodedImageQueueUrl;
+	private String WorkerToManagerFinish;
 	private String ManagerDone;
 	private String BucketName;
 	private String KeyBucketName;
@@ -182,13 +182,10 @@ public class Local {
 			MesseagesQueueUrl = AmazonSqs.createQueue(MesseagesQueueUrlRequest)
 					.getQueueUrl();
 
-			CreateQueueRequest EncodedMesseagesQueueUrlRequest = new CreateQueueRequest()
-					.withQueueName("EncodedQueue");
-			@SuppressWarnings("unused")
-			CreateQueueRequest WorketToManagerFinish = new CreateQueueRequest()
-					.withQueueName("WorketToManagerFinish");
-			EncodedImageQueueUrl = AmazonSqs.createQueue(
-					EncodedMesseagesQueueUrlRequest).getQueueUrl();
+			CreateQueueRequest WorkerToManagerFinishQueueUrlRequest = new CreateQueueRequest()
+					.withQueueName("WorkerToManagerFinish");
+			WorkerToManagerFinish = AmazonSqs.createQueue(
+					WorkerToManagerFinishQueueUrlRequest).getQueueUrl();
 			CreateQueueRequest ManagerDoneQueueRequest = new CreateQueueRequest()
 					.withQueueName("ManagerDone");
 			ManagerDone = AmazonSqs.createQueue(ManagerDoneQueueRequest)
@@ -219,7 +216,7 @@ public class Local {
 
 		System.out.println("Deleting the queues.\n");
 		AmazonSqs.deleteQueue(new DeleteQueueRequest(
-				ConstantProvider.ENCODED_IMAGE));
+				ConstantProvider.WORKER_TO_MANAGER_FINISH));
 		AmazonSqs.deleteQueue(new DeleteQueueRequest(
 				ConstantProvider.LOCAL_TO_MANAGER_QUEUE));
 		AmazonSqs.deleteQueue(new DeleteQueueRequest(
@@ -228,6 +225,8 @@ public class Local {
 				ConstantProvider.MESSEAGES_QUEUE));
 		AmazonSqs.deleteQueue(new DeleteQueueRequest(
 				ConstantProvider.WORKER_TO_MANAGER_QUEUE));
+		AmazonSqs.deleteQueue(new DeleteQueueRequest(
+				ConstantProvider.MANAGER_DONE));
 		Thread.sleep(60000);
 
 	}
@@ -369,15 +368,15 @@ public class Local {
 		String outputFileName = "";
 		String numOfWorkers = "";
 
-		if (args.length > 0) {
-			inputFileName = args[1];
-			outputFileName = args[2];
-			numOfWorkers = args[3];
-
-		}
+		// if (args.length > 0) {
+		// inputFileName = args[1];
+		// outputFileName = args[2];
+		// numOfWorkers = args[3];
+		//
+		// }
 		local.sendMessege(
-				local.getBucketName() + " " + local.getKeyBucketName(),
-				ConstantProvider.LOCAL_TO_MANAGER_QUEUE + " 3");
+				local.getBucketName() + " " + local.getKeyBucketName() + " 3",
+				ConstantProvider.LOCAL_TO_MANAGER_QUEUE);
 		// Wait for finish answer
 		while (true) {
 			try {
@@ -385,7 +384,11 @@ public class Local {
 						ConstantProvider.MANAGER_DONE);
 				List<Message> messages = local.getAmazonSqs()
 						.receiveMessage(receiveMessageRequest).getMessages();
-				break;
+				if (messages.get(0).getBody().equals("Done"))
+					break;
+				else
+					Thread.sleep(1000);
+
 			} catch (Exception e) {
 				Thread.sleep(1000);
 			}
@@ -404,6 +407,7 @@ public class Local {
 		} catch (Exception e) {
 			System.err.println("Error: " + e.getMessage());
 		}
+		local.deleteQueues();
 
 	}
 
