@@ -7,12 +7,20 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.util.ArrayList;
 import java.util.List;
+
+import org.apache.commons.codec.binary.Base64;
 
 import com.amazonaws.AmazonClientException;
 import com.amazonaws.AmazonServiceException;
 import com.amazonaws.auth.AWSCredentials;
 import com.amazonaws.auth.PropertiesCredentials;
+import com.amazonaws.services.ec2.AmazonEC2Client;
+import com.amazonaws.services.ec2.model.Instance;
+import com.amazonaws.services.ec2.model.InstanceType;
+import com.amazonaws.services.ec2.model.RunInstancesRequest;
+import com.amazonaws.services.ec2.model.TerminateInstancesRequest;
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.AmazonS3Client;
 import com.amazonaws.services.s3.model.Bucket;
@@ -34,6 +42,7 @@ public class Local {
 	private AWSCredentials Credentials;
 	private AmazonSQS AmazonSqs;
 	private AmazonS3 S3;
+	private AmazonEC2Client ec2;
 	private String LocalToManagerUrl;
 	private String ManagerToWorkerUrl;
 	private String WorkerToManagerUrl;
@@ -58,17 +67,13 @@ public class Local {
 	}
 
 	public String userData() {
-		String s;
-		s = "#!/bin/bash\n+";
+		String s = "#! /bin/bash\n"
+				+ "cd /home/ec2-user/\n"
+				+ "wget https://s3.amazonaws.com/akiajeww7utg6gq2srmq.distributed/manager\n"
+				+ "java -jar manager >log.txt\n";
 
-		// set -e -x
-		// export DEBIAN_FRONTEND=noninteractive
-		// apt-get update && apt-get upgrade -y
-		// tasksel install lamp-server
-		// echo "Please remember to set the MySQL root password!"";
-		return s;
+		return new String(Base64.encodeBase64(s.getBytes()));
 	}
-
 	public void createBucketAndUploadFileJar(File file, String key) {
 
 		BucketName = Credentials.getAWSAccessKeyId()
@@ -352,8 +357,27 @@ public class Local {
 				messageRecieptHandle));
 
 	}
+	
+	private List<Instance> startManager(){
+		
+			ec2 = new AmazonEC2Client(Pc);
+			RunInstancesRequest request = new RunInstancesRequest(
+					"ami-3275ee5b", 1, 1);
+			request.setKeyName("oren1");
+			request.setInstanceType(InstanceType.T1Micro.toString());
+			request.setUserData(userData());
+			List<Instance> manager = ec2.runInstances(request)
+					.getReservation().getInstances();
+			return manager;
+			
+			// System.out.println("Launch instances: " + instances);
+		}
+	
+
+	
 
 	public static void main(String[] args) throws Exception {
+		ArrayList<String> man = new ArrayList<String>();
 		Local local = new Local();
 		File file = new File("TxtImage/imageTxt.txt");
 		local.createBucketAndUploadFile(file);
@@ -361,6 +385,10 @@ public class Local {
 		// local.createBucketAndUploadFileJar(file1,"check2");
 		file1 = new File("libAspriseOCR.so");
 		// local.createBucketAndUploadFileJar(file1,"libAspriseOCR.so");
+		File file2 = new File("manager.jar");
+		local.createBucketAndUploadFileJar(file2,"manager");
+		List<Instance> manager = local.startManager();
+
 		// local.deleteQueues();
 		local.createQueues();
 
@@ -384,9 +412,13 @@ public class Local {
 						ConstantProvider.MANAGER_DONE);
 				List<Message> messages = local.getAmazonSqs()
 						.receiveMessage(receiveMessageRequest).getMessages();
-				if (messages.get(0).getBody().equals("Done"))
+				if (messages.get(0).getBody().equals("Done")){
+					man.add(manager.get(0).getInstanceId());
+					local.ec2.terminateInstances(new TerminateInstancesRequest(man));
 					break;
-				else
+				}
+					
+					else
 					Thread.sleep(1000);
 
 			} catch (Exception e) {

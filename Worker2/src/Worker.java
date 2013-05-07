@@ -33,7 +33,7 @@ class Worker {
 			messages = sqs.receiveMessage(recieve).getMessages();
 			System.out.println("a");
 		}
-		sqs.sendMessage(new SendMessageRequest(ConstantProvider.WorketToManagerFinish,"finish"));
+		sqs.sendMessage(new SendMessageRequest(ConstantProvider.WorkerToManagerFinish,"finish"));
 		System.out.println("messege sent!!!");
 		
 	}

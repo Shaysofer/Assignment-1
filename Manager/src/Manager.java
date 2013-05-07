@@ -98,7 +98,7 @@ public class Manager {
 
 	private void uploadFileToServer(File file) {
 		System.out.println("Uploading a new object to S3 from a file\n");
-		S3.putObject(new PutObjectRequest(BucketName, keyBucketName, file));
+		S3.putObject(new PutObjectRequest(BucketName, "html.txt", file));
 
 	}
 
@@ -223,7 +223,7 @@ public class Manager {
 		String[] workerHandleInArray = workersHandle.split("1qazxsw2@WSXZAQ!");
 
 		try {
-			FileWriter fileWriter = new FileWriter("html.txt");
+			FileWriter fileWriter = new FileWriter("home/ec2-user/html.txt");
 			BufferedWriter out = new BufferedWriter(fileWriter);
 			out.write("<html>\n<title>OCR</title>\n<body>");
 			for (int i = 0; i < workerHandleInArray.length; i = i + 2) {
@@ -240,7 +240,7 @@ public class Manager {
 			out.close();
 
 		} catch (Exception e) {
-			System.err.println("Error: " + e.getMessage());
+			// System.err.println("Error: " + e.getMessage());
 		}
 
 	}
