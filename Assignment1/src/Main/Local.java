@@ -223,14 +223,6 @@ public class Local {
 		AmazonSqs.deleteQueue(new DeleteQueueRequest(
 				ConstantProvider.WORKER_TO_MANAGER_FINISH));
 		AmazonSqs.deleteQueue(new DeleteQueueRequest(
-				ConstantProvider.LOCAL_TO_MANAGER_QUEUE));
-		AmazonSqs.deleteQueue(new DeleteQueueRequest(
-				ConstantProvider.MANAGER_TO_WORKER_QUEUE));
-		AmazonSqs.deleteQueue(new DeleteQueueRequest(
-				ConstantProvider.MESSEAGES_QUEUE));
-		AmazonSqs.deleteQueue(new DeleteQueueRequest(
-				ConstantProvider.WORKER_TO_MANAGER_QUEUE));
-		AmazonSqs.deleteQueue(new DeleteQueueRequest(
 				ConstantProvider.MANAGER_DONE));
 		Thread.sleep(60000);
 
@@ -317,7 +309,7 @@ public class Local {
 		String[] AnswearMessege = null;
 		System.out.println("Downloading File from server");
 		S3Object object = S3.getObject(new GetObjectRequest(BucketName,
-				KeyBucketName));
+				"html.txt"));
 		System.out.println("Content-Type: "
 				+ object.getObjectMetadata().getContentType());
 		try {
@@ -399,7 +391,7 @@ public class Local {
 		// if (args.length > 0) {
 		// inputFileName = args[1];
 		// outputFileName = args[2];
-		// numOfWorkers = args[3];
+		// numOfWorkers = argshome/ec2-user/[3];
 		//
 		// }
 		local.sendMessege(
@@ -410,7 +402,7 @@ public class Local {
 			try {
 				ReceiveMessageRequest receiveMessageRequest = new ReceiveMessageRequest(
 						ConstantProvider.MANAGER_DONE);
-				List<Message> messages = local.getAmazonSqs()
+			List<Message> messages = local.getAmazonSqs()
 						.receiveMessage(receiveMessageRequest).getMessages();
 				if (messages.get(0).getBody().equals("Done")){
 					man.add(manager.get(0).getInstanceId());
@@ -429,7 +421,7 @@ public class Local {
 		String MissionComplete[] = local.downloadFileFromServer();
 
 		try {
-			FileWriter fileWriter = new FileWriter("html.html");
+			FileWriter fileWriter = new FileWriter("html.txt");
 			BufferedWriter out = new BufferedWriter(fileWriter);
 			for (String s : MissionComplete) {
 				out.write(s);
@@ -439,7 +431,7 @@ public class Local {
 		} catch (Exception e) {
 			System.err.println("Error: " + e.getMessage());
 		}
-		local.deleteQueues();
+	//local.deleteQueues();
 
 	}
 
