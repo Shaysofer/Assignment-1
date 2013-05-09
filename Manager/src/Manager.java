@@ -1,10 +1,13 @@
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -96,9 +99,9 @@ public class Manager {
 
 	}
 
-	private void uploadFileToServer(File file) {
+	private void uploadFileToServer(File file, String key) {
 		System.out.println("Uploading a new object to S3 from a file\n");
-		S3.putObject(new PutObjectRequest(BucketName, "html.txt", file));
+		S3.putObject(new PutObjectRequest(BucketName, key, file));
 
 	}
 
@@ -223,7 +226,10 @@ public class Manager {
 		String[] workerHandleInArray = workersHandle.split("1qazxsw2@WSXZAQ!");
 
 		try {
-			FileWriter fileWriter = new FileWriter("home/ec2-user/html.txt");
+			FileWriter fileWriter = new FileWriter("html.txt");
+			// FileWriter fileWriter1 = new
+			// FileWriter("home/ec2-user/html.txt");
+
 			BufferedWriter out = new BufferedWriter(fileWriter);
 			out.write("<html>\n<title>OCR</title>\n<body>");
 			for (int i = 0; i < workerHandleInArray.length; i = i + 2) {
@@ -261,6 +267,26 @@ public class Manager {
 				ConstantProvider.WORKER_TO_MANAGER_QUEUE));
 	}
 
+	public File inputStremTofile(InputStream in) {
+		File f = new File("html.txt");
+		try {
+
+			InputStream inputStream = new FileInputStream(
+					"InputStreamToFile.java");
+			OutputStream out = new FileOutputStream(f);
+			byte buf[] = new byte[1024];
+			int len;
+			while ((len = in.read(buf)) > 0)
+				out.write(buf, 0, len);
+			out.close();
+			in.close();
+			System.out
+					.println("\nFile is created...................................");
+		} catch (IOException e) {
+		}
+		return f;
+	}
+
 	public static void main(String[] args) throws Exception {
 
 		Manager manager = new Manager();
@@ -292,10 +318,15 @@ public class Manager {
 
 		manager.clean();
 		System.out.println("Start Building the html file"); // /in the clean
-															// function
-		File file = new File("html.txt");
+		String key = "html.txt"; // functio
+		String homekey = System.getProperty("user.dir") + "/html.text";
+		System.out.println(homekey);
+		// File file = new File(homekey);
+		InputStream in = ClassLoader.getSystemResourceAsStream(System
+				.getProperty("user.dir") + "/html.text");
 
-		manager.uploadFileToServer(file);
+		File file = manager.inputStremTofile(in);
+		manager.uploadFileToServer(file, "html.txt");
 
 		// Let local know that work has done
 		manager.sendMessege("Done", ConstantProvider.MANAGER_DONE);
