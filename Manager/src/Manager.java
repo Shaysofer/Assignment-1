@@ -79,6 +79,7 @@ public class Manager {
 		BucketName = messegeSplit[0];
 		keyBucketName = messegeSplit[1];
 		numOfJobsForWorker = Integer.parseInt(messegeSplit[2]);
+		System.out.println("aaaaaaaaaaaaaaaaaaaaaaaaaaaa" + numOfJobsForWorker);
 
 		System.out.println("Downloading File from server");
 		S3Object object = S3.getObject(new GetObjectRequest(BucketName,

@@ -7,6 +7,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -51,6 +52,11 @@ public class Local {
 	private String ManagerDone;
 	private String BucketName;
 	private String KeyBucketName;
+	private String inputName;
+	private String outputName;
+
+
+	private int numOfWorkers;
 
 	public Local() {
 		try {
@@ -70,7 +76,7 @@ public class Local {
 		String s = "#! /bin/bash\n"
 				+ "cd /home/ec2-user/\n"
 				+ "wget https://s3.amazonaws.com/akiajeww7utg6gq2srmq.distributed/manager\n"
-				+ "java -jar manager >log.txt\n";
+				+ "java -jar manager >>log.txt\n";
 
 		return new String(Base64.encodeBase64(s.getBytes()));
 	}
@@ -89,7 +95,7 @@ public class Local {
 			/*
 			 * List the buckets in your account
 			 */
-			System.out.println("Listing buckets");
+			//System.out.println("Listing buckets");
 			System.out.println("Uploading " + key + " to S3 from a file\n");
 			PutObjectRequest putRequest = new PutObjectRequest(BucketName, key,
 					file);
@@ -124,7 +130,7 @@ public class Local {
 		KeyBucketName = "distributed";
 
 		System.out.println("===========================================");
-		System.out.println("Getting Started with Amazon S3");
+		System.out.println("Getting Started with Assignment 1");
 		System.out.println("===========================================\n");
 
 		try {
@@ -371,22 +377,31 @@ public class Local {
 	public static void main(String[] args) throws Exception {
 		ArrayList<String> man = new ArrayList<String>();
 		Local local = new Local();
-		File file = new File("TxtImage/imageTxt.txt");
+		local.numOfWorkers = Integer.parseInt(args[2]);
+		local.inputName = args[0];
+		local.outputName = args[1];
+//		URL url = new URL(local.inputName);
+//		BufferedReader buff =new BufferedReader(new InputStreamReader(url.openStream()));
+//
+//		FileWriter write1 = new FileWriter("TxtImage/"+local.outputName);
+//		String s;
+//		while ((s = buff.readLine()) != null)	{
+//			write1.write(s);
+//		}
+		File file = new File("TxtImage/"+local.inputName);
 		local.createBucketAndUploadFile(file);
 		File file1 = new File("check2.jar");
 		// local.createBucketAndUploadFileJar(file1,"check2");
 		file1 = new File("libAspriseOCR.so");
 		// local.createBucketAndUploadFileJar(file1,"libAspriseOCR.so");
 		File file2 = new File("manager.jar");
-		local.createBucketAndUploadFileJar(file2,"manager");
+	//	local.createBucketAndUploadFileJar(file2,"manager");
 		List<Instance> manager = local.startManager();
 
 		// local.deleteQueues();
 		local.createQueues();
 
-		String inputFileName = "";
-		String outputFileName = "";
-		String numOfWorkers = "";
+		String numOfWorkers = " " + Integer.toString(local.numOfWorkers);
 
 		// if (args.length > 0) {
 		// inputFileName = args[1];
@@ -395,7 +410,7 @@ public class Local {
 		//
 		// }
 		local.sendMessege(
-				local.getBucketName() + " " + local.getKeyBucketName() + " 3",
+				local.getBucketName() + " " + local.getKeyBucketName() + numOfWorkers,
 				ConstantProvider.LOCAL_TO_MANAGER_QUEUE);
 		// Wait for finish answer
 		while (true) {
@@ -405,8 +420,9 @@ public class Local {
 			List<Message> messages = local.getAmazonSqs()
 						.receiveMessage(receiveMessageRequest).getMessages();
 				if (messages.get(0).getBody().equals("Done")){
-					man.add(manager.get(0).getInstanceId());
-					local.ec2.terminateInstances(new TerminateInstancesRequest(man));
+				//	man.add(manager.get(0).getInstanceId());
+					//local.ec2.terminateInstances(new TerminateInstancesRequest(man));
+					local.deleteQueues();
 					break;
 				}
 					
@@ -421,7 +437,7 @@ public class Local {
 		String MissionComplete[] = local.downloadFileFromServer();
 
 		try {
-			FileWriter fileWriter = new FileWriter("html.txt");
+			FileWriter fileWriter = new FileWriter(local.outputName);
 			BufferedWriter out = new BufferedWriter(fileWriter);
 			for (String s : MissionComplete) {
 				out.write(s);
