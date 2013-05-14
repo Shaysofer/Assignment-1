@@ -1,12 +1,17 @@
 package Main;
 
+
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.OutputStream;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
@@ -57,20 +62,52 @@ public class Local {
 
 
 	private int numOfWorkers;
-
-	public Local() {
+	public File inputStremTofile(InputStream in) {
+		File f = new File("html.txt");
 		try {
-			Pc = new PropertiesCredentials(
-					Local.class
-							.getResourceAsStream("../AwsCredentials.properties"));
+
+			//InputStream inputStream = new FileInputStream(in);
+			OutputStream out = new FileOutputStream(f);
+			byte buf[] = new byte[1024];
+			int len;
+			while ((len = in.read(buf)) > 0)
+				out.write(buf, 0, len);
+			out.close();
+			in.close();
+			System.out
+					.println("\nFile is created...................................");
 		} catch (IOException e) {
-			e.printStackTrace();
 		}
+		return f;
+	}
+	public Local() throws FileNotFoundException, IllegalArgumentException, IOException {
+	//	System.out.println(System.getProperty("user.dir") + "\\"+ "AwsCredentials.properties");
+	//	File f = new File(System.getProperty("user.dir") + "/"+ "AwsCredentials.properties");
+	//		Pc  = new PropertiesCredentials(f);
+				Pc = new PropertiesCredentials(
+					Local.class
+						.getResourceAsStream("/AwsCredentials.properties"));
+			
+			//Pc = new PropertiesCredentials(
+				//	Local.class
+					//		.getResourceAsStream("AwsCredentials.properties"));
+		//} catch (IOException e) {
+		//	e.printStackTrace();
+		//}
+			
+//	InputStream in = ClassLoader.getSystemResourceAsStream(System
+	//			.getProperty("user.dir") + "/AwsCredentials.properties");
+	
+	//inputStremTofile(in);
+//InputStream in = new ClassLoader.getSystemResourceAsStream("C:\github\Assignment-1\Assignment1\AwsCredentials.properties");
+		//InputStream a = getClass().getResourceAsStream("C:/github/Assignment-1");
+		//File file4 = inputStremTofile(a);
+			
 		Credentials = Pc;
 		AmazonSqs = new AmazonSQSClient(Pc);
 		S3 = new AmazonS3Client(Credentials);
-
 	}
+	
 
 	public String userData() {
 		String s = "#! /bin/bash\n"
@@ -85,7 +122,7 @@ public class Local {
 		BucketName = Credentials.getAWSAccessKeyId()
 				+ "."
 				+ ConstantProvider.DIRECTORY_NAME.replace('\\', '_')
-						.replace('/', '_').replace(':', '_');
+				.replace('/', '_').replace(':', '_');
 		BucketName = BucketName.toLowerCase();
 
 		try {
@@ -103,8 +140,8 @@ public class Local {
 			S3.putObject(putRequest);
 		} catch (AmazonServiceException ase) {
 			System.out
-					.println("Caught an AmazonServiceException, which means your request made it "
-							+ "to Amazon S3, but was rejected with an error response for some reason.");
+			.println("Caught an AmazonServiceException, which means your request made it "
+					+ "to Amazon S3, but was rejected with an error response for some reason.");
 			System.out.println("Error Message:    " + ase.getMessage());
 			System.out.println("HTTP Status Code: " + ase.getStatusCode());
 			System.out.println("AWS Error Code:   " + ase.getErrorCode());
@@ -112,9 +149,9 @@ public class Local {
 			System.out.println("Request ID:       " + ase.getRequestId());
 		} catch (AmazonClientException ace) {
 			System.out
-					.println("Caught an AmazonClientException, which means the client encountered "
-							+ "a serious internal problem while trying to communicate with S3, "
-							+ "such as not being able to access the network.");
+			.println("Caught an AmazonClientException, which means the client encountered "
+					+ "a serious internal problem while trying to communicate with S3, "
+					+ "such as not being able to access the network.");
 			System.out.println("Error Message: " + ace.getMessage());
 		}
 
@@ -125,7 +162,7 @@ public class Local {
 		BucketName = Credentials.getAWSAccessKeyId()
 				+ "."
 				+ ConstantProvider.DIRECTORY_NAME.replace('\\', '_')
-						.replace('/', '_').replace(':', '_');
+				.replace('/', '_').replace(':', '_');
 		BucketName = BucketName.toLowerCase();
 		KeyBucketName = "distributed";
 
@@ -153,8 +190,8 @@ public class Local {
 
 		} catch (AmazonServiceException ase) {
 			System.out
-					.println("Caught an AmazonServiceException, which means your request made it "
-							+ "to Amazon S3, but was rejected with an error response for some reason.");
+			.println("Caught an AmazonServiceException, which means your request made it "
+					+ "to Amazon S3, but was rejected with an error response for some reason.");
 			System.out.println("Error Message:    " + ase.getMessage());
 			System.out.println("HTTP Status Code: " + ase.getStatusCode());
 			System.out.println("AWS Error Code:   " + ase.getErrorCode());
@@ -162,9 +199,9 @@ public class Local {
 			System.out.println("Request ID:       " + ase.getRequestId());
 		} catch (AmazonClientException ace) {
 			System.out
-					.println("Caught an AmazonClientException, which means the client encountered "
-							+ "a serious internal problem while trying to communicate with S3, "
-							+ "such as not being able to access the network.");
+			.println("Caught an AmazonClientException, which means the client encountered "
+					+ "a serious internal problem while trying to communicate with S3, "
+					+ "such as not being able to access the network.");
 			System.out.println("Error Message: " + ace.getMessage());
 		}
 
@@ -174,31 +211,31 @@ public class Local {
 		System.out.println("Create Queues");
 		try {
 			CreateQueueRequest LocalToManagerQueueRequest = new CreateQueueRequest()
-					.withQueueName("LocalToManagerQueue");
+			.withQueueName("LocalToManagerQueue");
 			LocalToManagerUrl = AmazonSqs.createQueue(
 					LocalToManagerQueueRequest).getQueueUrl();
 
 			CreateQueueRequest ManagerToWorkerQueueRequest = new CreateQueueRequest()
-					.withQueueName("ManagerToWorkerQueue");
+			.withQueueName("ManagerToWorkerQueue");
 			ManagerToWorkerUrl = AmazonSqs.createQueue(
 					ManagerToWorkerQueueRequest).getQueueUrl();
 
 			CreateQueueRequest WorkerToManagerQueueRequest = new CreateQueueRequest()
-					.withQueueName("WorkerToManager");
+			.withQueueName("WorkerToManager");
 			WorkerToManagerUrl = AmazonSqs.createQueue(
 					WorkerToManagerQueueRequest).getQueueUrl();
 
 			CreateQueueRequest MesseagesQueueUrlRequest = new CreateQueueRequest()
-					.withQueueName("MesseagesQueue");
+			.withQueueName("MesseagesQueue");
 			MesseagesQueueUrl = AmazonSqs.createQueue(MesseagesQueueUrlRequest)
 					.getQueueUrl();
 
 			CreateQueueRequest WorkerToManagerFinishQueueUrlRequest = new CreateQueueRequest()
-					.withQueueName("WorkerToManagerFinish");
+			.withQueueName("WorkerToManagerFinish");
 			WorkerToManagerFinish = AmazonSqs.createQueue(
 					WorkerToManagerFinishQueueUrlRequest).getQueueUrl();
 			CreateQueueRequest ManagerDoneQueueRequest = new CreateQueueRequest()
-					.withQueueName("ManagerDone");
+			.withQueueName("ManagerDone");
 			ManagerDone = AmazonSqs.createQueue(ManagerDoneQueueRequest)
 					.getQueueUrl();
 
@@ -206,8 +243,8 @@ public class Local {
 
 		} catch (AmazonServiceException ase) {
 			System.out
-					.println("Caught an AmazonServiceException, which means your request made it "
-							+ "to Amazon SQS, but was rejected with an error response for some reason.");
+			.println("Caught an AmazonServiceException, which means your request made it "
+					+ "to Amazon SQS, but was rejected with an error response for some reason.");
 			System.out.println("Error Message:    " + ase.getMessage());
 			System.out.println("HTTP Status Code: " + ase.getStatusCode());
 			System.out.println("AWS Error Code:   " + ase.getErrorCode());
@@ -215,9 +252,9 @@ public class Local {
 			System.out.println("Request ID:       " + ase.getRequestId());
 		} catch (AmazonClientException ace) {
 			System.out
-					.println("Caught an AmazonClientException, which means the client encountered "
-							+ "a serious internal problem while trying to communicate with SQS, such as not "
-							+ "being able to access the network.");
+			.println("Caught an AmazonClientException, which means the client encountered "
+					+ "a serious internal problem while trying to communicate with SQS, such as not "
+					+ "being able to access the network.");
 			System.out.println("Error Message: " + ace.getMessage());
 		}
 
@@ -355,24 +392,24 @@ public class Local {
 				messageRecieptHandle));
 
 	}
-	
-	private List<Instance> startManager(){
-		
-			ec2 = new AmazonEC2Client(Pc);
-			RunInstancesRequest request = new RunInstancesRequest(
-					"ami-3275ee5b", 1, 1);
-			request.setKeyName("oren1");
-			request.setInstanceType(InstanceType.T1Micro.toString());
-			request.setUserData(userData());
-			List<Instance> manager = ec2.runInstances(request)
-					.getReservation().getInstances();
-			return manager;
-			
-			// System.out.println("Launch instances: " + instances);
-		}
-	
 
-	
+	private List<Instance> startManager(){
+
+		ec2 = new AmazonEC2Client(Pc);
+		RunInstancesRequest request = new RunInstancesRequest(
+				"ami-3275ee5b", 1, 1);
+		request.setKeyName("oren1");
+		request.setInstanceType(InstanceType.T1Micro.toString());
+		request.setUserData(userData());
+		List<Instance> manager = ec2.runInstances(request)
+				.getReservation().getInstances();
+		return manager;
+
+		// System.out.println("Launch instances: " + instances);
+	}
+
+
+
 
 	public static void main(String[] args) throws Exception {
 		ArrayList<String> man = new ArrayList<String>();
@@ -380,22 +417,30 @@ public class Local {
 		local.numOfWorkers = Integer.parseInt(args[2]);
 		local.inputName = args[0];
 		local.outputName = args[1];
-//		URL url = new URL(local.inputName);
-//		BufferedReader buff =new BufferedReader(new InputStreamReader(url.openStream()));
-//
-//		FileWriter write1 = new FileWriter("TxtImage/"+local.outputName);
-//		String s;
-//		while ((s = buff.readLine()) != null)	{
-//			write1.write(s);
-//		}
-		File file = new File("TxtImage/"+local.inputName);
-		local.createBucketAndUploadFile(file);
-		File file1 = new File("check2.jar");
-		// local.createBucketAndUploadFileJar(file1,"check2");
-		file1 = new File("libAspriseOCR.so");
+		System.out.println("1");
+		//		URL url = new URL(local.inputName);
+		//		BufferedReader buff =new BufferedReader(new InputStreamReader(url.openStream()));
+		//
+		//		FileWriter write1 = new FileWriter("TxtImage/"+local.outputName);
+		//		String s;
+		//		while ((s = buff.readLine()) != null)	{
+		//			write1.write(s);
+		//		}
+		System.out.println(ClassLoader.getSystemResourceAsStream(System.getProperty("user.dir")));
+		InputStream in1 = ClassLoader.getSystemResourceAsStream(local.inputName);
+		//System.out.println("1");
+		File file3 = local.inputStremTofile(in1);
+		//File file = new File("TxtImage/"+local.inputName);
+	//	local.createBucketAndUploadFile(file3);
+		//System.out.println("2");
+		File file1 = local.inputStremTofile(ClassLoader.getSystemResourceAsStream("check2.jar"));
+		 local.createBucketAndUploadFileJar(file3,"check2");
+		//System.out.println("3");
+		//file1 = new File("libAspriseOCR.so");
+		//System.out.println("4");
 		// local.createBucketAndUploadFileJar(file1,"libAspriseOCR.so");
-		File file2 = new File("manager.jar");
-	//	local.createBucketAndUploadFileJar(file2,"manager");
+		//File file2 = new File("manager.jar");
+		//	local.createBucketAndUploadFileJar(file2,"manager");
 		List<Instance> manager = local.startManager();
 
 		// local.deleteQueues();
@@ -417,16 +462,16 @@ public class Local {
 			try {
 				ReceiveMessageRequest receiveMessageRequest = new ReceiveMessageRequest(
 						ConstantProvider.MANAGER_DONE);
-			List<Message> messages = local.getAmazonSqs()
+				List<Message> messages = local.getAmazonSqs()
 						.receiveMessage(receiveMessageRequest).getMessages();
 				if (messages.get(0).getBody().equals("Done")){
-				//	man.add(manager.get(0).getInstanceId());
+					//	man.add(manager.get(0).getInstanceId());
 					//local.ec2.terminateInstances(new TerminateInstancesRequest(man));
 					local.deleteQueues();
 					break;
 				}
-					
-					else
+
+				else
 					Thread.sleep(1000);
 
 			} catch (Exception e) {
@@ -447,7 +492,7 @@ public class Local {
 		} catch (Exception e) {
 			System.err.println("Error: " + e.getMessage());
 		}
-	//local.deleteQueues();
+		//local.deleteQueues();
 
 	}
 
