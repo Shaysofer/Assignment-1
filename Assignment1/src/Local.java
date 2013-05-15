@@ -2,7 +2,6 @@
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.FileWriter;
@@ -10,7 +9,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -27,7 +25,6 @@ import com.amazonaws.services.ec2.model.RunInstancesRequest;
 import com.amazonaws.services.ec2.model.TerminateInstancesRequest;
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.AmazonS3Client;
-import com.amazonaws.services.s3.model.Bucket;
 import com.amazonaws.services.s3.model.CannedAccessControlList;
 import com.amazonaws.services.s3.model.GetObjectRequest;
 import com.amazonaws.services.s3.model.PutObjectRequest;
@@ -50,8 +47,13 @@ public class Local {
 	private String LocalToManagerUrl;
 	private String ManagerToWorkerUrl;
 	private String WorkerToManagerUrl;
+	@SuppressWarnings("unused")
+
 	private String MesseagesQueueUrl;
+	@SuppressWarnings("unused")
 	private String WorkerToManagerFinish;
+	@SuppressWarnings("unused")
+
 	private String ManagerDone;
 	private String BucketName;
 	private String KeyBucketName;
@@ -72,8 +74,6 @@ public class Local {
 				out.write(buf, 0, len);
 			out.close();
 			in.close();
-			System.out
-					.println("\nFile is created...................................");
 		} catch (IOException e) {
 		}
 		return f;
@@ -169,24 +169,9 @@ public class Local {
 		BucketName = BucketName.toLowerCase();
 		KeyBucketName = "distributed";
 
-		System.out.println("===========================================");
-		System.out.println("Getting Started with Assignment 1");
-		System.out.println("===========================================\n");
-
 		try {
-			System.out.println("Creating bucket " + BucketName + "\n");
-			S3.createBucket(BucketName);
 
-			/*
-			 * List the buckets in your account
-			 */
-			System.out.println("Listing buckets");
-			for (Bucket bucket : S3.listBuckets()) {
-				System.out.println(" - " + bucket.getName());
-			}
-			System.out.println();
-
-			System.out.println("Uploading a new object to S3 from a file\n");
+			System.out.println("Uploading the image list to S3 from a file\n");
 			S3.putObject(new PutObjectRequest(BucketName, KeyBucketName, file));
 
 			System.out.println();
@@ -408,7 +393,7 @@ public class Local {
 				.getInstances();
 		return manager;
 
-		// System.out.println("Launch instances: " + instances);
+		
 	}
 
 	public static void main(String[] args) throws Exception {
@@ -417,51 +402,16 @@ public class Local {
 		local.numOfWorkers = Integer.parseInt(args[2]);
 		local.inputName = args[0];
 		local.outputName = args[1];
-		System.out.println("1");
-		// URL url = new URL(local.inputName);
-		// BufferedReader buff =new BufferedReader(new
-		// InputStreamReader(url.openStream()));
-		//
-		// FileWriter write1 = new FileWriter("TxtImage/"+local.outputName);
-		// String s;
-		// while ((s = buff.readLine()) != null) {
-		// write1.write(s);
-		// }
-		System.out.println(ClassLoader.getSystemResourceAsStream(System
-				.getProperty("user.dir")));
-		//InputStream in1 = ClassLoader
-		//		.getSystemResourceAsStream(local.inputName);
-		// System.out.println("1");
-	//	File file3 = local.inputStremTofile(in1);
-		 File file = new File(local.inputName);
-		// local.createBucketAndUploadFile(file3);
-		// System.out.println("2");
-		File file1 = local.inputStremTofile(ClassLoader
-				.getSystemResourceAsStream("check2.jar"));
+		File file = new File(local.inputName);
 		local.createBucketAndUploadFile(file);
-		// System.out.println("3");
-		// file1 = new File("libAspriseOCR.so");
-		// System.out.println("4");
-		// local.createBucketAndUploadFileJar(file1,"libAspriseOCR.so");
-		// File file2 = new File("manager.jar");
-		// local.createBucketAndUploadFileJar(file2,"manager");
+		//local.createBucketAndUploadFileJar(new File("libAspriseOCR.so"),"libAspriseOCR.so");
+		//local.createBucketAndUploadFileJar(new File("manager.jar"),"manager");
 		List<Instance> manager = local.startManager();
-
-		// local.deleteQueues();
 		local.createQueues();
-
 		String numOfWorkers = " " + Integer.toString(local.numOfWorkers);
-
-		// if (args.length > 0) {
-		// inputFileName = args[1];
-		// outputFileName = args[2];
-		// numOfWorkers = argshome/ec2-user/[3];
-		//
-		// }
 		local.sendMessege(
 				local.getBucketName() + " " + local.getKeyBucketName()
 						+ numOfWorkers, ConstantProvider.LOCAL_TO_MANAGER_QUEUE);
-		// Wait for finish answer
 		while (true) {
 			try {
 				ReceiveMessageRequest receiveMessageRequest = new ReceiveMessageRequest(
@@ -469,9 +419,10 @@ public class Local {
 				List<Message> messages = local.getAmazonSqs()
 						.receiveMessage(receiveMessageRequest).getMessages();
 				if (messages.get(0).getBody().equals("Done")) {
-					// man.add(manager.get(0).getInstanceId());
-					// local.ec2.terminateInstances(new
-					// TerminateInstancesRequest(man));
+					System.out.println("Terminating the Manager");
+					 man.add(manager.get(0).getInstanceId());
+					 local.ec2.terminateInstances(new
+					 TerminateInstancesRequest(man));
 					local.deleteQueues();
 					break;
 				}
@@ -493,12 +444,9 @@ public class Local {
 				out.write(s);
 			}
 			out.close();
-
 		} catch (Exception e) {
 			System.err.println("Error: " + e.getMessage());
 		}
-		// local.deleteQueues();
-
 	}
 
 }
