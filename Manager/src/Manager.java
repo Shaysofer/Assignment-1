@@ -47,6 +47,7 @@ public class Manager {
 	private String keyBucketName;
 	private String BucketName;
 	private AmazonSQS AmazonSQS;
+	private String AllUrl = "";
 
 	public Manager() {
 		try {
@@ -128,13 +129,15 @@ public class Manager {
 
 	private void uploadMesseagesToQueue() {
 		for (int i = 1; i < imageUrls.length; i++) {
-			sendMessege(imageUrls[i], ConstantProvider.MESSEAGES_QUEUE);
+			sendMessege(imageUrls[i], ConstantProvider.MESSEAGES_QUEUE, true);
 		}
 
 	}
 
-	private void sendMessege(String messege, String to) {
+	private void sendMessege(String messege, String to, boolean saveUrlInarray) {
 		System.out.println("Send messege " + messege + " to " + to);
+		if (saveUrlInarray)
+			AllUrl = AllUrl + messege + "1qazxsw2@WSXZAQ!";
 		AmazonSQS.sendMessage(new SendMessageRequest(to, messege));
 
 	}
@@ -219,12 +222,15 @@ public class Manager {
 		String workersHandle = "";
 		while (numOfMesseage > 0) {
 			workersHandle = workersHandle
-					+ receiveMessegeFromQueue(ConstantProvider.WORKER_TO_MANAGER_QUEUE);
+					+ receiveMessegeFromQueue(ConstantProvider.WORKER_TO_MANAGER_QUEUE)
+					+ "1qazxsw2@WSXZAQ!";
 			deleteMessegeFromQueue("Encoded messeage had been delete",
 					ConstantProvider.WORKER_TO_MANAGER_QUEUE);
 			numOfMesseage--;
 		}
+		System.out.println(workersHandle.length() + "  " + workersHandle);
 		String[] workerHandleInArray = workersHandle.split("1qazxsw2@WSXZAQ!");
+		String[] urls = AllUrl.split("1qazxsw2@WSXZAQ!");
 
 		try {
 			FileWriter fileWriter = new FileWriter("html.txt");
@@ -233,21 +239,21 @@ public class Manager {
 
 			BufferedWriter out = new BufferedWriter(fileWriter);
 			out.write("<html>\n<title>OCR</title>\n<body>");
-			for (int i = 0; i < workerHandleInArray.length; i = i + 2) {
+			for (int i = 0; i < workerHandleInArray.length; i++) {
 				out.write("<p>\n");
 				out.write("<img src=\"");
-				out.write(workerHandleInArray[i]);
+				out.write(urls[i]);
 				out.write("\"><br/>\n");
-				out.write(workerHandleInArray[i + 1] + "\n");
+				out.write(workerHandleInArray[i] + "\n");
 				out.write("<p>\n");
 
 			}
-
+			System.out.println("colse file");
 			out.write("</body>\n<html>");
 			out.close();
 
 		} catch (Exception e) {
-			// System.err.println("Error: " + e.getMessage());
+			System.err.println("Error: " + e.getMessage());
 		}
 
 	}
@@ -295,7 +301,7 @@ public class Manager {
 		manager.setWorkersForJobs();
 		manager.uploadMesseagesToQueue();
 		manager.sendMessege(Integer.toString(manager.getNumOfJobsForWorker()),
-				ConstantProvider.MANAGER_TO_WORKER_QUEUE);
+				ConstantProvider.MANAGER_TO_WORKER_QUEUE, false);
 
 		// Busy wait to check if all workers has done there work
 		manager.setEC2();
@@ -330,7 +336,7 @@ public class Manager {
 		manager.uploadFileToServer(file, "html.txt");
 
 		// Let local know that work has done
-		manager.sendMessege("Done", ConstantProvider.MANAGER_DONE);
+		manager.sendMessege("Done", ConstantProvider.MANAGER_DONE, false);
 
 	}
 }

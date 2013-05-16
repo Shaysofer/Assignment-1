@@ -1,4 +1,3 @@
-
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
@@ -48,12 +47,10 @@ public class Local {
 	private String ManagerToWorkerUrl;
 	private String WorkerToManagerUrl;
 	@SuppressWarnings("unused")
-
 	private String MesseagesQueueUrl;
 	@SuppressWarnings("unused")
 	private String WorkerToManagerFinish;
 	@SuppressWarnings("unused")
-
 	private String ManagerDone;
 	private String BucketName;
 	private String KeyBucketName;
@@ -393,7 +390,6 @@ public class Local {
 				.getInstances();
 		return manager;
 
-		
 	}
 
 	public static void main(String[] args) throws Exception {
@@ -404,9 +400,11 @@ public class Local {
 		local.outputName = args[1];
 		File file = new File(local.inputName);
 		local.createBucketAndUploadFile(file);
-		//local.createBucketAndUploadFileJar(new File("libAspriseOCR.so"),"libAspriseOCR.so");
-		//local.createBucketAndUploadFileJar(new File("manager.jar"),"manager");
-		List<Instance> manager = local.startManager();
+		// local.createBucketAndUploadFileJar(new
+		// File("libAspriseOCR.so"),"libAspriseOCR.so");
+		// local.createBucketAndUploadFileJar(new
+		// File("manager.jar"),"manager");
+		//List<Instance> manager = local.startManager();
 		local.createQueues();
 		String numOfWorkers = " " + Integer.toString(local.numOfWorkers);
 		local.sendMessege(
@@ -420,9 +418,9 @@ public class Local {
 						.receiveMessage(receiveMessageRequest).getMessages();
 				if (messages.get(0).getBody().equals("Done")) {
 					System.out.println("Terminating the Manager");
-					 man.add(manager.get(0).getInstanceId());
-					 local.ec2.terminateInstances(new
-					 TerminateInstancesRequest(man));
+				//	man.add(manager.get(0).getInstanceId());
+				//	local.ec2.terminateInstances(new TerminateInstancesRequest(
+				//			man));
 					local.deleteQueues();
 					break;
 				}
@@ -442,6 +440,8 @@ public class Local {
 			BufferedWriter out = new BufferedWriter(fileWriter);
 			for (String s : MissionComplete) {
 				out.write(s);
+				out.write("\n");
+
 			}
 			out.close();
 		} catch (Exception e) {

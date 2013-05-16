@@ -1,7 +1,43 @@
 <html>
 <title>OCR</title>
 <body><p>
-<img src="[{MessageId: a4c323cf-7601-4ea9-b56f-db6c0c817dad,ReceiptHandle: 0NNAq8PwvXsJdUHCEPBp8IkBEvEcipPzD4QCEtacdlR3qLK3IVlGWvvwRyy9rvOJkoJZE2ckRY5/do7tUge7ZPhiNAIKkiW3bnFInqvqCrHRRBwHgnhd1tiVLosq1/nkUebqO73RYmJhNfLD99+nYV8STU1Rzauj2MxRnLzSe5ZCrkMUc9FgOXyCVEwaVNmiMp+aOblhnnTHZUc8HBpDH24TVa3qpuCSaBFUNLmQXbR95P0QlI6g2HU+fNGCtzGbfzGeGxsnWYLenryEmg++M8loHC3Lh7Bo1z9OdHsr1+4=,MD5OfBody: 91649beae205dec72fb7a8870ecd7e26,Body: === ASPRISE OCR SDK EVALUATION ===
+<img src="http://images.veer.com/IMG/PTYP/UMT/UMT0000300_P.GIF"><br/>
+[{MessageId: a7999eb2-cb03-436a-82a0-ebb67027171f,ReceiptHandle: Prl0vft3nRilJxMVu6RcqXlmuXyQ5/rFLKI8iiKcsD5z3KAIl7jE3O82+XcNFl6Hpo7Hjk79MgyxgDV7tkGPq6svY3ykjn6h8vDYcjp46qhfeerYnrCCQIjW/018W3LF+1aF9QcGfW6VaRZvNRNI/llG+AiMnYvBodt/eAt3TEXBx3hKZmsNNPvfy9vObj17eqw7gjBgl2EZxkrAPtEYSjs6YdixSBo6e9wJUgMQd35nw9yOt8J9+ih8kyKRThqPhpWUaXoXb2cOyFKqdETBbqd0SRrO64p31z9OdHsr1+4=,MD5OfBody: f6a51058454a5c609949fa432cb51e67,Body: === ASPRISE OCR SDK EVALUATION ===
+
+1) For licensing information, visit: http://asprise.com/product/ocr
+2) This evaluation version replaces all recognized 'q' and 'x' occurrences with stars ('*'). 
+
+? (PIC)   
+r?g
+ ,
+  "  g
+ ??
+,Attributes: {}}]
+<p>
+<p>
+<img src="http://images.veer.com/IMG/PTYP/UMT/UMT0000149_P.GIF"><br/>
+[{MessageId: cfc3b036-f311-424d-a01e-9f6ccf10b69b,ReceiptHandle: Prl0vft3nRgyxRYfL2mBdHlmuXyQ5/rFEfy16x14qLIsuuleIi+bplaFUToK8onbb62ASVgqjQzZuPKTPYMoXI9k+0vVp3JU6C4+HgOVUzaoKTcJ9hCgrpgJbl1cN6uGHuAU0YRAjY79EWOBcgHtpr12xJs86IxzZjUU+1pUA/rqnGm0Ly95BhCTzz7iJSjU+dn1Qk1ZwS3O4tZwqMZ1IJjlZWzjlJiWf85wayzzeU3+diQGPWTwnNuC2zl3IFHYyPSjiTrCMqgg/lseroHZlncDzW2Ed+sD1z9OdHsr1+4=,MD5OfBody: 02a094cb72320387025ac0cff7b4b033,Body: === ASPRISE OCR SDK EVALUATION ===
+
+1) For licensing information, visit: http://asprise.com/product/ocr
+2) This evaluation version replaces all recognized 'q' and 'x' occurrences with stars ('*'). 
+
+r . 4/     r  *  4  
+          
+
+       ?  
+     g   
+   g    
+gR   y?*p 
+ *Yg   (PIC)p  ?
+
+ 
+ p  
+   
+,Attributes: {}}]
+<p>
+<p>
+<img src="http://typographica.org/wp-content/uploads/2008/03/2234323654_e6857f77dc_o.jpg"><br/>
+[{MessageId: b3ea5a54-716d-409f-88af-72e10da1d609,ReceiptHandle: Prl0vft3nRhlSiBVwcvmR3lmuXyQ5/rF4fMtQKIYP2SI/nm/hdM5dFTMsqNGXzqCp1VYo3u5oiZf26TNYzmCGmoh99OStC37P71/f+LjsHan0AFufYuKO+2MoL+uwbpWKjNht9+dF20/OxDdAsrh8Yji3SdTzq6H/POibLApbjyFX87Qjj72U/I1j/Ej2njiiJuKHINZGpSW9+7X6vbmlIb/p6vvFEoEOhs1ZCxP3G6Y9qAiooxR7tzQrlv9rH11lg7Lsc9TY/OKSp984KATCqqtpjwdPn4X1z9OdHsr1+4=,MD5OfBody: 91649beae205dec72fb7a8870ecd7e26,Body: === ASPRISE OCR SDK EVALUATION ===
 
 1) For licensing information, visit: http://asprise.com/product/ocr
 2) This evaluation version replaces all recognized 'q' and 'x' occurrences with stars ('*'). 
@@ -13,9 +49,177 @@ g (PIC)
          
 g(PIC) 
 
-?  
+¾  
       \code(01f5)     / \code(01f5)*
-,Attributes: {}}][{MessageId: d948afde-c296-4463-8f60-0f76c1e1b41b,ReceiptHandle: 0NNAq8PwvXux9ca/LUYZqokBEvEcipPzbkfDGvGNOqyHFac/yy9U/kzRcfP+z/m2po7Hjk79MgzTRtYMX6HDwrv7eUMSnWLLjyNn5uZsTxwXhUlL+zuJZev7/Lk0hlnPt7t/s+IWOwJhNfLD99+nYV8STU1Rzauj2MxRnLzSe5ZCrkMUc9FgOXyCVEwaVNmiMp+aOblhnnQw+HDHQSN8dViCWHWPPIe6RlsnljkEhrtuNOsnRSA87aoOqfvBiLu8zOmbOyEt5/peEk3UuJRDuygELHMW26PV1z9OdHsr1+4=,MD5OfBody: f6a51058454a5c609949fa432cb51e67,Body: === ASPRISE OCR SDK EVALUATION ===
+,Attributes: {}}]
+<p>
+<p>
+<img src="http://tldp.org/LDP/Bash-Beginners-Guide/html/images/script1.sh.png"><br/>
+[{MessageId: 3870c2e4-d28e-4ef9-b247-c90f51a638ce,ReceiptHandle: Prl0vft3nRhlSiBVwcvmR3lmuXyQ5/rFo6SIrQTfPx2I/nm/hdM5dN5Es6qp9bHvrQPVQyIFy8pf26TNYzmCGmoh99OStC37P71/f+LjsHan0AFufYuKO+2MoL+uwbpWKjNht9+dF20/OxDdAsrh8Yji3SdTzq6H/POibLApbjyFX87Qjj72U/I1j/Ej2njiiJuKHINZGpQ2GgWB5rW8oW7UmXY0GYFd8jRUW7f5r3s1uyqSoHNRXUWJNkIw9Sx92IwVL43Oer4sxYso/OTSgqYsGZfa9fQ41z9OdHsr1+4=,MD5OfBody: 5c73554b7e6d2c8a5ccb3bdbf1599c7e,Body: === ASPRISE OCR SDK EVALUATION ===
+
+1) For licensing information, visit: http://asprise.com/product/ocr
+2) This evaluation version replaces all recognized 'q' and 'x' occurrences with stars ('*'). 
+
+(PIC)(PIC)
+ 
+,Attributes: {}}]
+<p>
+<p>
+<img src="http://www.fontscape.com/pictures/bitstream/FlemishScript.gif"><br/>
+[{MessageId: b6c8e213-568a-4d26-8415-02f981508ffc,ReceiptHandle: Prl0vft3nRhhGxDl8IfWTnlmuXyQ5/rFtL58lbyZt1ALGiV7ffpEKVSf5i78NsVeb62ASVgqjQxC59gw/vbe6rXvXNgKv2Y2r6z1sVVFKNko4A7gHyxXa2GVADISQA11D8KATQYcW8WVaRZvNRNI/llG+AiMnYvBodt/eAt3TEXBx3hKZmsNNPvfy9vObj17eqw7gjBgl2FHvv/RzMCVSAM/iVbnYw5WlM8JGkgO5iEhQ83nFYWwO0DoIhwTQEKWXHgGUAoKDjqdLNYjBEm0rCIVZaHSmUwF1z9OdHsr1+4=,MD5OfBody: 8c3c2a09438047709150875908f95550,Body: === ASPRISE OCR SDK EVALUATION ===
+
+1) For licensing information, visit: http://asprise.com/product/ocr
+2) This evaluation version replaces all recognized 'q' and 'x' occurrences with stars ('*'). 
+
+(PIC)(PIC)
+?,, 
+o  !
+%
+,Attributes: {}}]
+<p>
+<p>
+<img src="http://www.identifont.com/samples/bitstream/CommercialScript.gif"><br/>
+[{MessageId: 2784baac-01c0-47aa-bb27-afe4268c3def,ReceiptHandle: Prl0vft3nRgtRHEnFKcLgXlmuXyQ5/rFBGdSPTWJ0WYXcLkVVu1QIIrX2Pv6BcwjhKNiQrxPe5e9sNWcvqaksV2FN6JTn6CZ9x+J3QwTU4OfHT3y6px+X5WvVZ6H5gXmXZz1IrqsCJz9EWOBcgHtpr12xJs86IxzZjUU+1pUA/rqnGm0Ly95BhCTzz7iJSjU+dn1Qk1ZwS3EzYxGh+B6hxt/UJw2RicJCC9vtan2wLp7cskmrlRZH1bR8hfN/kKKraDI10D7XEQAHVCzJT7OG71lTuy/zNap1z9OdHsr1+4=,MD5OfBody: 91649beae205dec72fb7a8870ecd7e26,Body: === ASPRISE OCR SDK EVALUATION ===
+
+1) For licensing information, visit: http://asprise.com/product/ocr
+2) This evaluation version replaces all recognized 'q' and 'x' occurrences with stars ('*'). 
+
+(PIC)
+g (PIC) 
+ (PIC)      
+   (PIC) 
+         
+g(PIC) 
+
+¾  
+      \code(01f5)     / \code(01f5)*
+,Attributes: {}}]
+<p>
+<p>
+<img src="http://cdn.myfonts.net/s/ec/sp-201001/Champion_Script.gif"><br/>
+[{MessageId: 7d5c551a-0b44-4641-8b8b-eb8d5acfc737,ReceiptHandle: Prl0vft3nRhlSiBVwcvmR3lmuXyQ5/rFUBd0GLNx1bGI/nm/hdM5dMGXsVQWbu+pG0+SBqbHHZBf26TNYzmCGmoh99OStC37P71/f+LjsHan0AFufYuKO+2MoL+uwbpWKjNht9+dF20/OxDdAsrh8Yji3SdTzq6H/POibLApbjyFX87Qjj72U/I1j/Ej2njiiJuKHINZGpTBiSwudca2lCZzqjqLhZ+HiwTnTlge+j5EpzMn0JM3KqepeHGKpzikmtOkrO6puCxtdgw9VwyZ0Tts0JBhS9Tn1z9OdHsr1+4=,MD5OfBody: 9f3844f8cbe763e98cc0b05d7c56b6a1,Body: === ASPRISE OCR SDK EVALUATION ===
+
+1) For licensing information, visit: http://asprise.com/product/ocr
+2) This evaluation version replaces all recognized 'q' and 'x' occurrences with stars ('*'). 
+
+   e 4 aK  
+ oDQ sTu *4z
+ (PIC)      
+
+'   
+o 1 2 45G 7   ! ?
+o o 8$   (/1)
+,Attributes: {}}]
+<p>
+<p>
+<img src="http://bowfinprintworks.com/ScriptSmall6/TidewayScript.gif"><br/>
+[{MessageId: c896f3d1-8a0e-416b-bc7f-111f0dfb3c1b,ReceiptHandle: Prl0vft3nRilJxMVu6RcqXlmuXyQ5/rFsYmc2RJuOVdz3KAIl7jE3HYj5ZVoRFCd8qCxN0gumFuxgDV7tkGPq6svY3ykjn6h8vDYcjp46qhfeerYnrCCQIjW/018W3LF+1aF9QcGfW6VaRZvNRNI/llG+AiMnYvBodt/eAt3TEXBx3hKZmsNNPvfy9vObj17eqw7gjBgl2EisiBkyUr/MyAL6xg2h6iunXfa+PWfFZniuNLAQHih8IpEzN7O542BraDI10D7XETH84Q6R/AVZATPRuOepCwH1z9OdHsr1+4=,MD5OfBody: 15f95f82a7f94e5c3118feb39b5deb5b,Body: === ASPRISE OCR SDK EVALUATION ===
+
+1) For licensing information, visit: http://asprise.com/product/ocr
+2) This evaluation version replaces all recognized 'q' and 'x' occurrences with stars ('*'). 
+
+(PIC)(PIC)
+ mg  Rgg¾
+ G  N R  "
+   
+ 
+%  3 56rB9or .,.r J,
+,Attributes: {}}]
+<p>
+<p>
+<img src="http://images.veer.com/IMG/PTYP/UMT/UMT0000149_P.GIF"><br/>
+[{MessageId: befe7c63-b278-4a88-aa96-960bb726673f,ReceiptHandle: Prl0vft3nRgtRHEnFKcLgXlmuXyQ5/rFKej8UwHzK30XcLkVVu1QIFB3snM+ZBp1E0NGrQnCwwq9sNWcvqaksV2FN6JTn6CZ9x+J3QwTU4OfHT3y6px+X5WvVZ6H5gXmXZz1IrqsCJz9EWOBcgHtpr12xJs86IxzZjUU+1pUA/rqnGm0Ly95BhCTzz7iJSjU+dn1Qk1ZwS32AXI+Kd3G7t/AW+qnt8iOPAe6hUY2MgHlYl5ISLra42f5wp8EOI0PmdWJCT4ATgKG5UVMNRsaTh7WD8w1j3Ql1z9OdHsr1+4=,MD5OfBody: 21f404fc38915ef2786dd743f7a47faf,Body: === ASPRISE OCR SDK EVALUATION ===
+
+1) For licensing information, visit: http://asprise.com/product/ocr
+2) This evaluation version replaces all recognized 'q' and 'x' occurrences with stars ('*'). 
+
+                   r s          0   0(PIC)
+ %  '              (PIC) ^ ''' 
+
+
+
+  e (PIC)
+ /bin/baSh
+
+
+
+Clear     ,    ts now
+ t star
+ ho   The SerlP       '
+ eC        ,,
+ susER'
+ eChO ''Hl''                nne,ted USe
+ ecM             ,ist of eO
+  ret,h yOU a
+  I will nOW
+  eChO   
+  echO
+  W
+  echO           iables nOW
+   two Var
+   m settl'ng
+   eChO RI,',b,a,            ,,  ,,
+   cOLOU =g..        scoLouR
+   vALuE='' ,  ,,, astring'  . sv uE
+   cho  'ThlS h,  , s a nU er 
+   e ho.. d t lS
+   eCh                ,pt now
+    ec O         b ,  your prO
+    g yoU a
+    ho   I'm gl'Vl'n
+    eC
+    echO                           A,,
+                            g,4-2O
+,Attributes: {}}]
+<p>
+<p>
+<img src="http://typographica.org/wp-content/uploads/2008/03/2234323654_e6857f77dc_o.jpg"><br/>
+[{MessageId: b6c8e213-568a-4d26-8415-02f981508ffc,ReceiptHandle: Prl0vft3nRhhGxDl8IfWTnlmuXyQ5/rFtL58lbyZt1ALGiV7ffpEKVSf5i78NsVeb62ASVgqjQxC59gw/vbe6rXvXNgKv2Y2r6z1sVVFKNko4A7gHyxXa2GVADISQA11D8KATQYcW8WVaRZvNRNI/llG+AiMnYvBodt/eAt3TEXBx3hKZmsNNPvfy9vObj17eqw7gjBgl2FHvv/RzMCVSAM/iVbnYw5WlM8JGkgO5iEhQ83nFYWwO0DoIhwTQEKWXHgGUAoKDjqdLNYjBEm0rF1oy9Z1tdjK1z9OdHsr1+4=,MD5OfBody: 8c3c2a09438047709150875908f95550,Body: === ASPRISE OCR SDK EVALUATION ===
+
+1) For licensing information, visit: http://asprise.com/product/ocr
+2) This evaluation version replaces all recognized 'q' and 'x' occurrences with stars ('*'). 
+
+(PIC)(PIC)
+?,, 
+o  !
+%
+,Attributes: {}}]
+<p>
+<p>
+<img src="http://tldp.org/LDP/Bash-Beginners-Guide/html/images/script1.sh.png"><br/>
+[{MessageId: 7d5c551a-0b44-4641-8b8b-eb8d5acfc737,ReceiptHandle: Prl0vft3nRhlSiBVwcvmR3lmuXyQ5/rFUBd0GLNx1bGI/nm/hdM5dMGXsVQWbu+pG0+SBqbHHZBf26TNYzmCGmoh99OStC37P71/f+LjsHan0AFufYuKO+2MoL+uwbpWKjNht9+dF20/OxDdAsrh8Yji3SdTzq6H/POibLApbjyFX87Qjj72U/I1j/Ej2njiiJuKHINZGpTBiSwudca2lCZzqjqLhZ+HiwTnTlge+j5EpzMn0JM3KqepeHGKpzikmtOkrO6puCxtdgw9VwyZ0cDU6q+10PAS1z9OdHsr1+4=,MD5OfBody: 9f3844f8cbe763e98cc0b05d7c56b6a1,Body: === ASPRISE OCR SDK EVALUATION ===
+
+1) For licensing information, visit: http://asprise.com/product/ocr
+2) This evaluation version replaces all recognized 'q' and 'x' occurrences with stars ('*'). 
+
+   e 4 aK  
+ oDQ sTu *4z
+ (PIC)      
+
+'   
+o 1 2 45G 7   ! ?
+o o 8$   (/1)
+,Attributes: {}}]
+<p>
+<p>
+<img src="http://www.fontscape.com/pictures/bitstream/FlemishScript.gif"><br/>
+[{MessageId: 7d5c551a-0b44-4641-8b8b-eb8d5acfc737,ReceiptHandle: Prl0vft3nRhlSiBVwcvmR3lmuXyQ5/rFUBd0GLNx1bGI/nm/hdM5dMGXsVQWbu+pG0+SBqbHHZBf26TNYzmCGmoh99OStC37P71/f+LjsHan0AFufYuKO+2MoL+uwbpWKjNht9+dF20/OxDdAsrh8Yji3SdTzq6H/POibLApbjyFX87Qjj72U/I1j/Ej2njiiJuKHINZGpTBiSwudca2lCZzqjqLhZ+HiwTnTlge+j5EpzMn0JM3KqepeHGKpzikmtOkrO6puCxtdgw9VwyZ0cHvnhj/bLpT1z9OdHsr1+4=,MD5OfBody: 9f3844f8cbe763e98cc0b05d7c56b6a1,Body: === ASPRISE OCR SDK EVALUATION ===
+
+1) For licensing information, visit: http://asprise.com/product/ocr
+2) This evaluation version replaces all recognized 'q' and 'x' occurrences with stars ('*'). 
+
+   e 4 aK  
+ oDQ sTu *4z
+ (PIC)      
+
+'   
+o 1 2 45G 7   ! ?
+o o 8$   (/1)
+,Attributes: {}}]
+<p>
+<p>
+<img src="http://www.identifont.com/samples/bitstream/CommercialScript.gif"><br/>
+[{MessageId: 82a76dd9-b0f0-40cb-85ac-fb0f600b7783,ReceiptHandle: Prl0vft3nRgtRHEnFKcLgXlmuXyQ5/rFiiRdDO2mlXgXcLkVVu1QIPX7Jb40h2KokWyEGnOMK0+9sNWcvqaksV2FN6JTn6CZ9x+J3QwTU4OfHT3y6px+X5WvVZ6H5gXmXZz1IrqsCJz9EWOBcgHtpr12xJs86IxzZjUU+1pUA/rqnGm0Ly95BhCTzz7iJSjU+dn1Qk1ZwS0BvFGIFI51EJ2oulH/Lof9/bd2UyvwhryhYot9bUXjVVZC0Jlf7b+4PHAwBbBadZqkxz4hzDNS5j7pQjE31waR1z9OdHsr1+4=,MD5OfBody: f6a51058454a5c609949fa432cb51e67,Body: === ASPRISE OCR SDK EVALUATION ===
 
 1) For licensing information, visit: http://asprise.com/product/ocr
 2) This evaluation version replaces all recognized 'q' and 'x' occurrences with stars ('*'). 
@@ -25,176 +229,164 @@ r?g
  ,
   "  g
  ??
-,Attributes: {}}][{MessageId: 844164fc-0034-47ed-b195-a736450e9c3a,ReceiptHandle: 0NNAq8PwvXtRhqWMz7Uz34kBEvEcipPzxvusne1O8Uf3b84zyDh+GNCWKllcmR4cKLOlSFvHb6J60zIRlnCfSUwFXvNK+3/qu9GyTDYDjFo/fKYRO5oxxubrybZ5tDY0+g0QzmkRn/lS/Ep5VUViIun5NjHtlQwgMlXSgwG4kh/k5AorkrMXbpS7ZKTqrfQJ8uVF+37tONMdPAyjtZ2wIKHjXnckzAtHG5vYl8mUXPSbRYsH3tPVxZyFsh+Ces7yAseV7X3a1BxyTU2Gk0I7IwMFhd4Wt+NO1z9OdHsr1+4=,MD5OfBody: 21f404fc38915ef2786dd743f7a47faf,Body: === ASPRISE OCR SDK EVALUATION ===
+,Attributes: {}}]
+<p>
+<p>
+<img src="http://cdn.myfonts.net/s/ec/sp-201001/Champion_Script.gif"><br/>
+[{MessageId: 9aa0224d-c575-4f03-b397-f0f2d8fc6cb5,ReceiptHandle: Prl0vft3nRjpckWkE5SzT3lmuXyQ5/rFuYfjVolQBoEdhAtU2iGsGFvX8wkWUUbmT0jPFy2UWsbYDGRRA3+QrpFtFZm0WbJhpvbbj/zs1OyWPxj6Wwl5t68EuYfhV2FxiaFx69ctYeSVaRZvNRNI/llG+AiMnYvBodt/eAt3TEXBx3hKZmsNNPvfy9vObj17eqw7gjBgl2ENTdxHaQrLoOCE/brG0n4D1vhqlNMxBv47Ntze9O3A1V9dW+LRbhvo7GTNqit81K9fRSVfWk2AitbqODcr+khY1z9OdHsr1+4=,MD5OfBody: f6a51058454a5c609949fa432cb51e67,Body: === ASPRISE OCR SDK EVALUATION ===
 
 1) For licensing information, visit: http://asprise.com/product/ocr
 2) This evaluation version replaces all recognized 'q' and 'x' occurrences with stars ('*'). 
 
-                   r s          0   0(PIC)
- %  '              (PIC) ^ ''' 
-
-
-
-  e (PIC)
- /bin/baSh
-
-
-
-Clear     ,    ts now
- t star
- ho   The SerlP       '
- eC        ,,
- susER'
- eChO ''Hl''                nne,ted USe
- ecM             ,ist of eO
-  ret,h yOU a
-  I will nOW
-  eChO   
-  echO
-  W
-  echO           iables nOW
-   two Var
-   m settl'ng
-   eChO RI,',b,a,            ,,  ,,
-   cOLOU =g..        scoLouR
-   vALuE='' ,  ,,, astring'  . sv uE
-   cho  'ThlS h,  , s a nU er 
-   e ho.. d t lS
-   eCh                ,pt now
-    ec O         b ,  your prO
-    g yoU a
-    ho   I'm gl'Vl'n
-    eC
-    echO                           A,,
-                            g,4-2O
-,Attributes: {}}][{MessageId: 9ac29362-2cab-4eb0-940a-a76d66dfd26d,ReceiptHandle: 0NNAq8PwvXsJdUHCEPBp8IkBEvEcipPzxmBzu7xGxrh3qLK3IVlGWiniST/84PmLUi66DT26i+Z/do7tUge7ZPhiNAIKkiW3bnFInqvqCrHRRBwHgnhd1tiVLosq1/nkUebqO73RYmJhNfLD99+nYV8STU1Rzauj2MxRnLzSe5ZCrkMUc9FgOXyCVEwaVNmiMp+aOblhnnS9B/XZOusiosqvmPxbpijjweYgHRHZlu0zhaNeu9LX3PCs2CSbIwTQfzGeGxsnWYJ9USlPPvBlPH+d6gFvXV481z9OdHsr1+4=,MD5OfBody: 21f404fc38915ef2786dd743f7a47faf,Body: === ASPRISE OCR SDK EVALUATION ===
-
-1) For licensing information, visit: http://asprise.com/product/ocr
-2) This evaluation version replaces all recognized 'q' and 'x' occurrences with stars ('*'). 
-
-                   r s          0   0(PIC)
- %  '              (PIC) ^ ''' 
-
-
-
-  e (PIC)
- /bin/baSh
-
-
-
-Clear     ,    ts now
- t star
- ho   The SerlP       '
- eC        ,,
- susER'
- eChO ''Hl''                nne,ted USe
- ecM             ,ist of eO
-  ret,h yOU a
-  I will nOW
-  eChO   
-  echO
-  W
-  echO           iables nOW
-   two Var
-   m settl'ng
-   eChO RI,',b,a,            ,,  ,,
-   cOLOU =g..        scoLouR
-   vALuE='' ,  ,,, astring'  . sv uE
-   cho  'ThlS h,  , s a nU er 
-   e ho.. d t lS
-   eCh                ,pt now
-    ec O         b ,  your prO
-    g yoU a
-    ho   I'm gl'Vl'n
-    eC
-    echO                           A,,
-                            g,4-2O
-,Attributes: {}}][{MessageId: d6ebd874-8df2-4331-9e9b-c5fc2842347b,ReceiptHandle: 0NNAq8PwvXuqQQn7Dt4vuokBEvEcipPz6DuIOjeVIYEmI0K66sD+bnpplvSJ5M/Xp1VYo3u5oiYo0xqRsPqkh3AZpg3MqT4PjTNVovUXQ4ezr3jaK9fyAhg9D2vqgxHzCkE4QNqJvA5S/Ep5VUViIun5NjHtlQwgMlXSgwG4kh/k5AorkrMXbpS7ZKTqrfQJ8uVF+37tONOvZD+yA1TSm5xAKbnoKjNagFhqScl+HjRXIXG10rPd1og55u6PhhkJ+DxTPtWvZcJTXUR6hyCig4s+JSIa/JRE1z9OdHsr1+4=,MD5OfBody: 02a094cb72320387025ac0cff7b4b033,Body: === ASPRISE OCR SDK EVALUATION ===
-
-1) For licensing information, visit: http://asprise.com/product/ocr
-2) This evaluation version replaces all recognized 'q' and 'x' occurrences with stars ('*'). 
-
-r . 4/     r  *  4  
-          
-
-       ?  
-     g   
-   g    
-gR   y?*p 
- *Yg   (PIC)p  ?
-
- 
- p  
-   
-,Attributes: {}}][{MessageId: d6ebd874-8df2-4331-9e9b-c5fc2842347b,ReceiptHandle: 0NNAq8PwvXuqQQn7Dt4vuokBEvEcipPz6DuIOjeVIYEmI0K66sD+bnpplvSJ5M/Xp1VYo3u5oiYo0xqRsPqkh3AZpg3MqT4PjTNVovUXQ4ezr3jaK9fyAhg9D2vqgxHzCkE4QNqJvA5S/Ep5VUViIun5NjHtlQwgMlXSgwG4kh/k5AorkrMXbpS7ZKTqrfQJ8uVF+37tONOvZD+yA1TSm5xAKbnoKjNagFhqScl+HjRXIXG10rPd1og55u6PhhkJ+DxTPtWvZcJTXUR6hyCigxxIYfGE87ST1z9OdHsr1+4=,MD5OfBody: 02a094cb72320387025ac0cff7b4b033,Body: === ASPRISE OCR SDK EVALUATION ===
-
-1) For licensing information, visit: http://asprise.com/product/ocr
-2) This evaluation version replaces all recognized 'q' and 'x' occurrences with stars ('*'). 
-
-r . 4/     r  *  4  
-          
-
-       ?  
-     g   
-   g    
-gR   y?*p 
- *Yg   (PIC)p  ?
-
- 
- p  
-   
-,Attributes: {}}][{MessageId: 9ac29362-2cab-4eb0-940a-a76d66dfd26d,ReceiptHandle: 0NNAq8PwvXsJdUHCEPBp8IkBEvEcipPzxmBzu7xGxrh3qLK3IVlGWiniST/84PmLUi66DT26i+Z/do7tUge7ZPhiNAIKkiW3bnFInqvqCrHRRBwHgnhd1tiVLosq1/nkUebqO73RYmJhNfLD99+nYV8STU1Rzauj2MxRnLzSe5ZCrkMUc9FgOXyCVEwaVNmiMp+aOblhnnS9B/XZOusiosqvmPxbpijjweYgHRHZlu0zhaNeu9LX3PCs2CSbIwTQfzGeGxsnWYJ9USlPPvBlPLjl1oyeJt1p1z9OdHsr1+4=,MD5OfBody: 21f404fc38915ef2786dd743f7a47faf,Body: === ASPRISE OCR SDK EVALUATION ===
-
-1) For licensing information, visit: http://asprise.com/product/ocr
-2) This evaluation version replaces all recognized 'q' and 'x' occurrences with stars ('*'). 
-
-                   r s          0   0(PIC)
- %  '              (PIC) ^ ''' 
-
-
-
-  e (PIC)
- /bin/baSh
-
-
-
-Clear     ,    ts now
- t star
- ho   The SerlP       '
- eC        ,,
- susER'
- eChO ''Hl''                nne,ted USe
- ecM             ,ist of eO
-  ret,h yOU a
-  I will nOW
-  eChO   
-  echO
-  W
-  echO           iables nOW
-   two Var
-   m settl'ng
-   eChO RI,',b,a,            ,,  ,,
-   cOLOU =g..        scoLouR
-   vALuE='' ,  ,,, astring'  . sv uE
-   cho  'ThlS h,  , s a nU er 
-   e ho.. d t lS
-   eCh                ,pt now
-    ec O         b ,  your prO
-    g yoU a
-    ho   I'm gl'Vl'n
-    eC
-    echO                           A,,
-                            g,4-2O
-,Attributes: {}}][{MessageId: 5e62c86d-36a0-4477-9cb2-d835bb91cdd8,ReceiptHandle: 0NNAq8PwvXsJdUHCEPBp8IkBEvEcipPzUKqSgXDaT5h3qLK3IVlGWn+mZbOCKih4G0u06prSsip/do7tUge7ZPhiNAIKkiW3bnFInqvqCrHRRBwHgnhd1tiVLosq1/nkUebqO73RYmJhNfLD99+nYV8STU1Rzauj2MxRnLzSe5ZCrkMUc9FgOXyCVEwaVNmiMp+aOblhnnT9KgHigOYvllejgM0TFyvQk4IWVHK2tAK8OWvtz3cCjbTU7nPg3EJbAseV7X3a1ByJZLpM50nM6dCUaWUevk0i1z9OdHsr1+4=,MD5OfBody: 8c3c2a09438047709150875908f95550,Body: === ASPRISE OCR SDK EVALUATION ===
+? (PIC)   
+r?g
+ ,
+  "  g
+ ??
+,Attributes: {}}]
+<p>
+<p>
+<img src="http://bowfinprintworks.com/ScriptSmall6/TidewayScript.gif"><br/>
+[{MessageId: 0c73404b-1281-4e19-8114-0a262c92c568,ReceiptHandle: Prl0vft3nRjpckWkE5SzT3lmuXyQ5/rFpKIzSLQskR8dhAtU2iGsGOVwnJcf3Z0BxOEJBNXqvX3YDGRRA3+QrpFtFZm0WbJhpvbbj/zs1OyWPxj6Wwl5t68EuYfhV2FxiaFx69ctYeSVaRZvNRNI/llG+AiMnYvBodt/eAt3TEXBx3hKZmsNNPvfy9vObj17eqw7gjBgl2FOdSZuVMdeTlIFlbNcqLJgVIlDN828raHk8eQxBm9blmF8jSJZGWR7g0+Ku9jO/Z6QQBLoirVnCt9vOy4OJ0dk1z9OdHsr1+4=,MD5OfBody: 15f95f82a7f94e5c3118feb39b5deb5b,Body: === ASPRISE OCR SDK EVALUATION ===
 
 1) For licensing information, visit: http://asprise.com/product/ocr
 2) This evaluation version replaces all recognized 'q' and 'x' occurrences with stars ('*'). 
 
 (PIC)(PIC)
-?,, 
-o  !
-%
-,Attributes: {}}][{MessageId: 6f79b8fa-b41c-4c4d-a108-575d0312145c,ReceiptHandle: 0NNAq8PwvXuOcRZO9Q3IZIkBEvEcipPz9WXbsdWmUQALlCOH2sb+YIWBzGFfYq8nKFtXRigIk24RHf/OkMB/PxzBs0P1SVp6pj9HSLcjaKWvechM6QJ34RUFnJ/F57sWGJqRu6MTbyhS/Ep5VUViIun5NjHtlQwgMlXSgwG4kh/k5AorkrMXbpS7ZKTqrfQJ8uVF+37tONO9SZFOrMFIKInftTNBjlsuXOboEi+OrRI+zpgnXhbUlUhr6JN9WQuKpDMBERW6GRPYFGHNLq8GYR9GS6I0Tdat1z9OdHsr1+4=,MD5OfBody: 15f95f82a7f94e5c3118feb39b5deb5b,Body: === ASPRISE OCR SDK EVALUATION ===
+ mg  Rgg¾
+ G  N R  "
+   
+ 
+%  3 56rB9or .,.r J,
+,Attributes: {}}]
+<p>
+<p>
+<img src="http://homepages.rootsweb.ancestry.com/~kobie/script2.gif"><br/>
+[{MessageId: 92c1f041-8f37-4403-9410-36f10c0c276e,ReceiptHandle: Prl0vft3nRgtRHEnFKcLgXlmuXyQ5/rFvp/V1oB3wR0XcLkVVu1QIO8TAuC/X+JvrXX6mP8Lteq9sNWcvqaksV2FN6JTn6CZ9x+J3QwTU4OfHT3y6px+X5WvVZ6H5gXmXZz1IrqsCJz9EWOBcgHtpr12xJs86IxzZjUU+1pUA/rqnGm0Ly95BhCTzz7iJSjU+dn1Qk1ZwS1QhUmG4R4obDyNVoVOjxvnPwiXrwU9wEyPr1ZznsoSZzrIYmHBOm+xxR4Y7XZGwh+958lrvPMzjQPAjukZ3DJx1z9OdHsr1+4=,MD5OfBody: 02a094cb72320387025ac0cff7b4b033,Body: === ASPRISE OCR SDK EVALUATION ===
 
 1) For licensing information, visit: http://asprise.com/product/ocr
-2) This evaluation version replaces all recognized 'q' and 'x' occur
+2) This evaluation version replaces all recognized 'q' and 'x' occurrences with stars ('*'). 
+
+r . 4/     r  *  4  
+          
+
+       ?  
+     g   
+   g    
+gR   y?*p 
+ *Yg   (PIC)p  ?
+
+ 
+ p  
+   
+,Attributes: {}}]
+<p>
+<p>
+<img src="http://typographica.org/wp-content/uploads/2008/03/2234323654_e6857f77dc_o.jpg"><br/>
+[{MessageId: a712149e-9253-4d7f-81b0-531ae8e6dbdd,ReceiptHandle: Prl0vft3nRhlSiBVwcvmR3lmuXyQ5/rFV5I/IymTTDeI/nm/hdM5dIlkUjB+tTnuwUoSV7xLtN9f26TNYzmCGmoh99OStC37P71/f+LjsHan0AFufYuKO+2MoL+uwbpWKjNht9+dF20/OxDdAsrh8Yji3SdTzq6H/POibLApbjyFX87Qjj72U/I1j/Ej2njiiJuKHINZGpS+3fxJN+O/NxA4jpl5tX1qFNOTIsEsLe4gjaKcx0BVRPa02AY16vsRiiNqvQ9ieR37O14BoSnsr82J4DOfibY31z9OdHsr1+4=,MD5OfBody: f2a6a8eeb63cf590666ef821cc880920,Body: === ASPRISE OCR SDK EVALUATION ===
+
+1) For licensing information, visit: http://asprise.com/product/ocr
+2) This evaluation version replaces all recognized 'q' and 'x' occurrences with stars ('*'). 
+
+?   g  
+      
+    
+    *
+     ?  
+      
+,Attributes: {}}]
+<p>
+<p>
+<img src="http://tldp.org/LDP/Bash-Beginners-Guide/html/images/script1.sh.png"><br/>
+[{MessageId: a712149e-9253-4d7f-81b0-531ae8e6dbdd,ReceiptHandle: Prl0vft3nRhlSiBVwcvmR3lmuXyQ5/rFV5I/IymTTDeI/nm/hdM5dIlkUjB+tTnuwUoSV7xLtN9f26TNYzmCGmoh99OStC37P71/f+LjsHan0AFufYuKO+2MoL+uwbpWKjNht9+dF20/OxDdAsrh8Yji3SdTzq6H/POibLApbjyFX87Qjj72U/I1j/Ej2njiiJuKHINZGpS+3fxJN+O/NxA4jpl5tX1qFNOTIsEsLe4gjaKcx0BVRPa02AY16vsRiiNqvQ9ieR37O14BoSnsr37xr6J92JPM1z9OdHsr1+4=,MD5OfBody: f2a6a8eeb63cf590666ef821cc880920,Body: === ASPRISE OCR SDK EVALUATION ===
+
+1) For licensing information, visit: http://asprise.com/product/ocr
+2) This evaluation version replaces all recognized 'q' and 'x' occurrences with stars ('*'). 
+
+?   g  
+      
+    
+    *
+     ?  
+      
+,Attributes: {}}]
+<p>
+<p>
+<img src="http://www.fontscape.com/pictures/bitstream/FlemishScript.gif"><br/>
+[{MessageId: d59eb239-57be-4d3d-a40d-8c65b90af078,ReceiptHandle: Prl0vft3nRhhGxDl8IfWTnlmuXyQ5/rFIuU7BoXglg8LGiV7ffpEKS7N2FmtrH6l74ava560qM5C59gw/vbe6rXvXNgKv2Y2r6z1sVVFKNko4A7gHyxXa2GVADISQA11D8KATQYcW8WVaRZvNRNI/llG+AiMnYvBodt/eAt3TEXBx3hKZmsNNPvfy9vObj17eqw7gjBgl2G+2u/t3c0UqXZL7Ya63CJp196XrviIP8kbmPChTvUJBfQ1k6aTSH9ahw1juMPlmaKdLNYjBEm0rKufko0zwRz+1z9OdHsr1+4=,MD5OfBody: 5c73554b7e6d2c8a5ccb3bdbf1599c7e,Body: === ASPRISE OCR SDK EVALUATION ===
+
+1) For licensing information, visit: http://asprise.com/product/ocr
+2) This evaluation version replaces all recognized 'q' and 'x' occurrences with stars ('*'). 
+
+(PIC)(PIC)
+ 
+,Attributes: {}}]
+<p>
+<p>
+<img src="http://www.identifont.com/samples/bitstream/CommercialScript.gif"><br/>
+[{MessageId: 7d5c551a-0b44-4641-8b8b-eb8d5acfc737,ReceiptHandle: Prl0vft3nRhlSiBVwcvmR3lmuXyQ5/rF4tG5YT6P+diI/nm/hdM5dCU0u6RsU8reIn0Qy0bVTvhf26TNYzmCGmoh99OStC37P71/f+LjsHan0AFufYuKO+2MoL+uwbpWKjNht9+dF20/OxDdAsrh8Yji3SdTzq6H/POibLApbjyFX87Qjj72U/I1j/Ej2njiiJuKHINZGpTBiSwudca2lCZzqjqLhZ+HiwTnTlge+j5EpzMn0JM3KqepeHGKpzikmtOkrO6puCxtdgw9VwyZ0aAudPJ8RKLy1z9OdHsr1+4=,MD5OfBody: 9f3844f8cbe763e98cc0b05d7c56b6a1,Body: === ASPRISE OCR SDK EVALUATION ===
+
+1) For licensing information, visit: http://asprise.com/product/ocr
+2) This evaluation version replaces all recognized 'q' and 'x' occurrences with stars ('*'). 
+
+   e 4 aK  
+ oDQ sTu *4z
+ (PIC)      
+
+'   
+o 1 2 45G 7   ! ?
+o o 8$   (/1)
+,Attributes: {}}]
+<p>
+<p>
+<img src="http://cdn.myfonts.net/s/ec/sp-201001/Champion_Script.gif"><br/>
+[{MessageId: 9aa0224d-c575-4f03-b397-f0f2d8fc6cb5,ReceiptHandle: Prl0vft3nRjpckWkE5SzT3lmuXyQ5/rF1SC8PB75VO8dhAtU2iGsGKB24qQnCHLNy/EYI2gitBPYDGRRA3+QrpFtFZm0WbJhpvbbj/zs1OyWPxj6Wwl5t68EuYfhV2FxiaFx69ctYeSVaRZvNRNI/llG+AiMnYvBodt/eAt3TEXBx3hKZmsNNPvfy9vObj17eqw7gjBgl2ENTdxHaQrLoOCE/brG0n4D1vhqlNMxBv47Ntze9O3A1V9dW+LRbhvo7GTNqit81K9fRSVfWk2AikmoOR9ktRpc1z9OdHsr1+4=,MD5OfBody: f6a51058454a5c609949fa432cb51e67,Body: === ASPRISE OCR SDK EVALUATION ===
+
+1) For licensing information, visit: http://asprise.com/product/ocr
+2) This evaluation version replaces all recognized 'q' and 'x' occurrences with stars ('*'). 
+
+? (PIC)   
+r?g
+ ,
+  "  g
+ ??
+,Attributes: {}}]
+<p>
+<p>
+<img src="http://bowfinprintworks.com/ScriptSmall6/TidewayScript.gif"><br/>
+[{MessageId: 7d5c551a-0b44-4641-8b8b-eb8d5acfc737,ReceiptHandle: Prl0vft3nRhlSiBVwcvmR3lmuXyQ5/rF4tG5YT6P+diI/nm/hdM5dCU0u6RsU8reIn0Qy0bVTvhf26TNYzmCGmoh99OStC37P71/f+LjsHan0AFufYuKO+2MoL+uwbpWKjNht9+dF20/OxDdAsrh8Yji3SdTzq6H/POibLApbjyFX87Qjj72U/I1j/Ej2njiiJuKHINZGpTBiSwudca2lCZzqjqLhZ+HiwTnTlge+j5EpzMn0JM3KqepeHGKpzikmtOkrO6puCxtdgw9VwyZ0Q2vJQOphD1H1z9OdHsr1+4=,MD5OfBody: 9f3844f8cbe763e98cc0b05d7c56b6a1,Body: === ASPRISE OCR SDK EVALUATION ===
+
+1) For licensing information, visit: http://asprise.com/product/ocr
+2) This evaluation version replaces all recognized 'q' and 'x' occurrences with stars ('*'). 
+
+   e 4 aK  
+ oDQ sTu *4z
+ (PIC)      
+
+'   
+o 1 2 45G 7   ! ?
+o o 8$   (/1)
+,Attributes: {}}]
+<p>
+<p>
+<img src="http://homepages.rootsweb.ancestry.com/~kobie/script2.gif"><br/>
+[{MessageId: 7d5c551a-0b44-4641-8b8b-eb8d5acfc737,ReceiptHandle: Prl0vft3nRhlSiBVwcvmR3lmuXyQ5/rFuWjTJ/7GA1iI/nm/hdM5dFg2r/SdGgrFjPXsDmAUmgZf26TNYzmCGmoh99OStC37P71/f+LjsHan0AFufYuKO+2MoL+uwbpWKjNht9+dF20/OxDdAsrh8Yji3SdTzq6H/POibLApbjyFX87Qjj72U/I1j/Ej2njiiJuKHINZGpTBiSwudca2lCZzqjqLhZ+HiwTnTlge+j5EpzMn0JM3KqepeHGKpzikmtOkrO6puCxtdgw9VwyZ0YOjE2N6ylff1z9OdHsr1+4=,MD5OfBody: 9f3844f8cbe763e98cc0b05d7c56b6a1,Body: === ASPRISE OCR SDK EVALUATION ===
+
+1) For licensing information, visit: http://asprise.com/product/ocr
+2) This evaluation version replaces all recognized 'q' and 'x' occurrences with stars ('*'). 
+
+   e 4 aK  
+ oDQ sTu *4z
+ (PIC)      
+
+'   
+o 1 2 45G 7   ! ?
+o o 8$   (/1)
+,Attributes: {}}]
+<p>
+<p>
+<img src="http://webdesignledger.com/wp-content/uploads/2010/04/script_fonts_11.jpg"><br/>
+[]
+<p>
+</body>
+<html>
